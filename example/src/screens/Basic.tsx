@@ -9,19 +9,19 @@ import {
 } from 'react-native';
 import StickyItemFlatList from '@gorhom/sticky-item';
 import DummyItem from '../components/dummy-item';
-import FacebookStickyStory from '../components/facebook-sticky-story';
+import BasicSticky from '../components/basic-sticky';
 import { useRoute } from '@react-navigation/native';
 
 const data = [...Array(20)]
   .fill(0)
   .map((_, index) => ({ id: `item-${index}` }));
 
-export const STORY_WIDTH = 90;
-export const STORY_HEIGHT = 150;
-const SEPARATOR_SIZE = 5;
-const BORDER_RADIUS = 15;
+export const STORY_WIDTH = 200;
+export const STORY_HEIGHT = 100;
+const SEPARATOR_SIZE = 10;
+const BORDER_RADIUS = 0;
 
-const FacebookStories = () => {
+const Basic = () => {
   const { params } = useRoute();
   // @ts-ignore
   const { title } = params;
@@ -56,8 +56,8 @@ const FacebookStories = () => {
           borderRadius={BORDER_RADIUS}
           stickyItemWidth={36}
           stickyItemHeight={36}
-          stickyItemBackgroundColors={['#F8F8FA', '#FFF']}
-          stickyItemContent={FacebookStickyStory}
+          stickyItemBackgroundColors={['#F8F8FA', '#2d88ff']}
+          stickyItemContent={BasicSticky}
           onStickyItemPress={handleStickyItemPress}
           data={data}
           renderItem={renderItem}
@@ -84,4 +84,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default FacebookStories;
+export default Basic;

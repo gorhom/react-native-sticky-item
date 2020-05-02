@@ -1,5 +1,12 @@
 import React from 'react';
-import { StyleSheet, View, SafeAreaView, StatusBar, Text } from 'react-native';
+import {
+  StyleSheet,
+  View,
+  SafeAreaView,
+  StatusBar,
+  Text,
+  Alert,
+} from 'react-native';
 import StickyItemFlatList from '@gorhom/sticky-item';
 import DummyItem from '../components/dummy-item';
 import FacebookStickyStoryStyled from '../components/facebook-sticky-story-styled';
@@ -19,6 +26,16 @@ const FacebookStoriesStyled = () => {
   // @ts-ignore
   const { title } = params;
 
+  // styles
+  const containerStyle = {
+    paddingVertical: SEPARATOR_SIZE * 2,
+    backgroundColor: '#111',
+  };
+
+  // methods
+  const handleStickyItemPress = () => Alert.alert('Sticky Item Pressed');
+
+  // render
   const renderItem = () => (
     <DummyItem
       width={STORY_WIDTH}
@@ -27,12 +44,6 @@ const FacebookStoriesStyled = () => {
       backgroundColor={'#333'}
     />
   );
-
-  const containerStyle = {
-    paddingVertical: SEPARATOR_SIZE * 2,
-    backgroundColor: '#111',
-  };
-
   return (
     <SafeAreaView style={styles.root}>
       <StatusBar barStyle="light-content" />
@@ -47,6 +58,7 @@ const FacebookStoriesStyled = () => {
           stickyItemHeight={36}
           stickyItemBackgroundColors={['#222', '#000']}
           stickyItemContent={FacebookStickyStoryStyled}
+          onStickyItemPress={handleStickyItemPress}
           data={data}
           renderItem={renderItem}
         />

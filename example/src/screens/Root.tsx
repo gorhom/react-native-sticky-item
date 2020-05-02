@@ -5,6 +5,15 @@ import { version, description } from '../../../package.json';
 
 const examples = [
   {
+    title: '',
+    data: [
+      {
+        name: 'Basic',
+        slug: 'Basic',
+      },
+    ],
+  },
+  {
     title: 'Facebook',
     data: [
       {

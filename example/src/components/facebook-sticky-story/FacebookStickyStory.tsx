@@ -82,7 +82,7 @@ const FacebookStickyStory = ({
           translateY: animatedIconTranslateY,
           scale: animatedIconScale,
         }
-      ),
+      ) as Animated.AnimatedTransform,
     },
   ];
   //#endregion
@@ -107,7 +107,7 @@ const FacebookStickyStory = ({
         {
           translateY: animatedTextTranslateY,
         },
-      ],
+      ] as Animated.AnimatedTransform,
     },
   ];
   //#endregion

@@ -24,7 +24,7 @@
   "homepage": "https://github.com/gorhom/react-native-sticky-item#readme",
   "scripts": {
     "typescript": "tsc --noEmit",
-    "lint": "eslint --ext .js,.ts,.tsx .",
+    "lint": "eslint --quiet --fix --ext .js,.ts,.tsx .",
     "build": "bob build",
     "release": "release-it",
     "example": "yarn --cwd example",
