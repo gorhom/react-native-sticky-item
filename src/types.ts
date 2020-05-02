@@ -68,6 +68,11 @@ export interface StickyItemConfig {
   stickyItemContent:
     | ((props: StickyItemContentProps) => React.ReactNode)
     | React.ComponentClass<StickyItemContentProps>;
+  /**
+   * Item layout direction.
+   * @default false
+   */
+  isRTL?: boolean;
 }
 
 export interface StickyItemFlatListProps<T>

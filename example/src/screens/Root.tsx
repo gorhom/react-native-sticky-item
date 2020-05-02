@@ -5,11 +5,15 @@ import { version, description } from '../../../package.json';
 
 const examples = [
   {
-    title: '',
+    title: 'Basic',
     data: [
       {
-        name: 'Basic',
+        name: 'Default',
         slug: 'Basic',
+      },
+      {
+        name: 'RTL',
+        slug: 'BasicRTL',
       },
     ],
   },
@@ -23,6 +27,10 @@ const examples = [
       {
         name: 'Styled',
         slug: 'FacebookStoriesStyled',
+      },
+      {
+        name: 'RTL',
+        slug: 'FacebookStoriesRTL',
       },
     ],
   },

@@ -13,7 +13,7 @@ const BasicSticky = ({
   stickyItemWidth,
   stickyItemHeight,
   separatorSize,
-  borderRadius,
+  isRTL,
 }: StickyItemContentProps) => {
   const stickyScaleX = stickyItemWidth / itemWidth;
   const stickyScaleY = stickyItemHeight / itemHeight;
@@ -32,11 +32,12 @@ const BasicSticky = ({
     {
       width: stickyItemWidth,
       lineHeight: stickyItemHeight,
+      [isRTL ? 'left' : 'right']: 0,
       paddingHorizontal: separatorSize,
       transform: transformOrigin(
         { x: 0, y: 0 },
         {
-          translateX: -separatorSize,
+          translateX: isRTL ? separatorSize : -separatorSize,
           translateY: itemHeight / 2 - stickyItemHeight / 2,
           scale: animatedPlusScale,
         }

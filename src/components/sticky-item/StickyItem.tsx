@@ -1,14 +1,18 @@
 import React from 'react';
+import { Dimensions } from 'react-native';
 import Animated, {
   multiply,
   sub,
   greaterThan,
   cond,
+  add,
 } from 'react-native-reanimated';
 import { transformOrigin } from 'react-native-redash';
 import StickyItemBackground from '../sticky-item-background';
 import { StickyItemProps } from '../../types';
 import { styles } from './styles';
+
+const { width: SCREEN_WIDTH } = Dimensions.get('window');
 
 const StickyItem = ({
   x,
@@ -20,16 +24,21 @@ const StickyItem = ({
   stickyItemHeight,
   stickyItemContent: StickyItemContent,
   stickyItemBackgroundColors,
+  isRTL,
 }: StickyItemProps) => {
   const threshold = itemWidth - stickyItemWidth - separatorSize;
   //#region Container
   const animatedTranslateX = multiply(
     cond(
       greaterThan(x, threshold),
-      itemWidth - stickyItemWidth - separatorSize * 2,
-      sub(x, separatorSize)
+      isRTL
+        ? SCREEN_WIDTH - stickyItemWidth - separatorSize * 2
+        : itemWidth - stickyItemWidth - separatorSize * 2,
+      isRTL
+        ? add(x, SCREEN_WIDTH - itemWidth - separatorSize)
+        : sub(x, separatorSize)
     ),
-    -1
+    isRTL ? 1 : -1
   );
   const containerStyle = [
     styles.container,
@@ -57,6 +66,7 @@ const StickyItem = ({
       separatorSize,
       borderRadius,
       threshold,
+      isRTL,
     };
     return typeof StickyItemContent === 'function' ? (
       // @ts-ignore
@@ -78,6 +88,7 @@ const StickyItem = ({
         stickyItemWidth={stickyItemWidth}
         stickyItemHeight={stickyItemHeight}
         stickyItemBackgroundColors={stickyItemBackgroundColors}
+        isRTL={isRTL}
       />
       {renderContent()}
     </Animated.View>

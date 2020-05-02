@@ -16,7 +16,11 @@ import {
 } from 'react-native-gesture-handler';
 import { useValues, useGestureHandler } from 'react-native-redash';
 import StickyItem from './components/sticky-item';
-import { DEFAULT_SEPARATOR_SIZE, DEFAULT_BORDER_RADIUS } from './constants';
+import {
+  DEFAULT_SEPARATOR_SIZE,
+  DEFAULT_BORDER_RADIUS,
+  DEFAULT_IS_RTL,
+} from './constants';
 import type { StickyItemFlatListProps } from './types';
 
 const AnimatedFlatList = Animated.createAnimatedComponent(FlatList);
@@ -31,6 +35,7 @@ function StickyItemFlatList<T>({
   stickyItemBackgroundColors,
   stickyItemContent,
   onStickyItemPress,
+  isRTL = DEFAULT_IS_RTL,
   ...rest
 }: StickyItemFlatListProps<T>) {
   const flatlistRef = useRef(null);
@@ -99,7 +104,7 @@ function StickyItemFlatList<T>({
                 top: isMinimized
                   ? -((itemHeight - (stickyItemWidth + separatorSize * 2)) / 2)
                   : 0,
-                left: isMinimized ? 0 : -separatorSize,
+                [isRTL ? 'right' : 'left']: isMinimized ? 0 : -separatorSize,
                 width: isMinimized
                   ? stickyItemWidth + separatorSize * 2
                   : itemWidth,
@@ -120,7 +125,7 @@ function StickyItemFlatList<T>({
       ref={tapRef}
       hitSlop={{
         top: 0,
-        left: -separatorSize,
+        [isRTL ? 'right' : 'left']: -separatorSize,
         width: itemWidth,
         height: itemHeight,
       }}
@@ -131,6 +136,7 @@ function StickyItemFlatList<T>({
         <AnimatedFlatList
           {...rest}
           ref={flatlistRef}
+          inverted={isRTL}
           ItemSeparatorComponent={renderSeparator}
           contentContainerStyle={contentContainerStyle}
           horizontal={true}
@@ -153,6 +159,7 @@ function StickyItemFlatList<T>({
           stickyItemHeight={stickyItemHeight}
           stickyItemBackgroundColors={stickyItemBackgroundColors}
           stickyItemContent={stickyItemContent}
+          isRTL={isRTL}
         />
       </Animated.View>
     </TapGestureHandler>

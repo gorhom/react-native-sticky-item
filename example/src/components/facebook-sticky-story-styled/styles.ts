@@ -6,8 +6,6 @@ export const styles = StyleSheet.create({
   },
   icon: {
     position: 'absolute',
-    left: '50%',
-    top: '50%',
     backgroundColor: '#2d88ff',
   },
   text: {
