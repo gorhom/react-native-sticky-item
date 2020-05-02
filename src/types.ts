@@ -34,4 +34,6 @@ export interface StickyItemConfig {
 
 export interface StickyItemFlatListProps<T>
   extends FlatListProps<T>,
-    StickyItemConfig {}
+    StickyItemConfig {
+  onStickyItemPress?: () => void;
+}

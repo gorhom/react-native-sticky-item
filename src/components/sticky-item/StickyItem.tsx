@@ -46,6 +46,7 @@ const StickyItem = ({
   ];
   //#endregion
 
+  // render
   const renderContent = () => {
     const props = {
       x,
@@ -65,9 +66,8 @@ const StickyItem = ({
       <StickyItemContent {...props} />
     );
   };
-
   return (
-    <Animated.View style={containerStyle}>
+    <Animated.View pointerEvents={'none'} style={containerStyle}>
       <StickyItemBackground
         threshold={threshold}
         x={x}

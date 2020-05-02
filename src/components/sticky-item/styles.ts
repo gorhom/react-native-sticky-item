@@ -8,4 +8,7 @@ export const styles = StyleSheet.create({
   thumbnail: {
     backgroundColor: 'black',
   },
+  button: {
+    ...StyleSheet.absoluteFillObject,
+  },
 });
