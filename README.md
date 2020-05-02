@@ -32,11 +32,11 @@ npm install @gorhom/sticky-item
 | ---------------------------- | ------------------------------------------------------------------------------------------------- | -------- | --------------------------------- | ------- |
 | `itemWidth`                  | Item's width.                                                                                     | YES      | number                            |         |
 | `itemHeight`                 | Item's height.                                                                                    | YES      | number                            |         |
-| `separatorSize`              | Flat list separator witdh.                                                                        | NO       | number                            | 10      |
+| `separatorSize`              | FlatList's separator width.                                                                        | NO       | number                            | 10      |
 | `borderRadius`               | Item & sticky border radius.                                                                      | NO       | number                            | 15      |
 | `stickyItemWidth`            | Sticky item's width.                                                                              | YES      | number                            |         |
 | `stickyItemHeight`           | Sticky item's height.                                                                             | YES      | number                            |         |
-| `stickyItemBackgroundColors` | Sticky item's two background colors, one when sticky item is extended another when it's minimise. | YES      | string[]                          |         |
+| `stickyItemBackgroundColors` | Sticky item's two background colors, one when sticky item is extended another when it's minimize. | YES      | string[]                          |         |
 | `stickyItemContent`          | Sticky item's content component.                                                                  | YES      | [`ReactNode`](./src/types.ts#L30) |         |
 | `onStickyItemPress`          | Callback when sticky item gets pressed.                                                           | NO       | function                          |
 

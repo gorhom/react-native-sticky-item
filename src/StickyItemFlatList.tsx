@@ -92,18 +92,18 @@ function StickyItemFlatList<T>({
         x,
         call([x], args => {
           if (tapRef.current) {
-            const isMinimised = args[0] > 0;
+            const isMinimized = args[0] > 0;
             // @ts-ignore
             tapRef.current.setNativeProps({
               hitSlop: {
-                top: isMinimised
+                top: isMinimized
                   ? -((itemHeight - (stickyItemWidth + separatorSize * 2)) / 2)
                   : 0,
-                left: isMinimised ? 0 : -separatorSize,
-                width: isMinimised
+                left: isMinimized ? 0 : -separatorSize,
+                width: isMinimized
                   ? stickyItemWidth + separatorSize * 2
                   : itemWidth,
-                height: isMinimised
+                height: isMinimized
                   ? stickyItemWidth + separatorSize * 2
                   : itemHeight,
               },
