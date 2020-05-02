@@ -15,16 +15,17 @@ import {
   State,
 } from 'react-native-gesture-handler';
 import { useValues, useGestureHandler } from 'react-native-redash';
-import type { StickyItemFlatListProps } from './types';
 import StickyItem from './components/sticky-item';
+import { DEFAULT_SEPARATOR_SIZE, DEFAULT_BORDER_RADIUS } from './constants';
+import type { StickyItemFlatListProps } from './types';
 
 const AnimatedFlatList = Animated.createAnimatedComponent(FlatList);
 
 function StickyItemFlatList<T>({
   itemWidth,
   itemHeight,
-  separatorSize,
-  borderRadius,
+  separatorSize = DEFAULT_SEPARATOR_SIZE,
+  borderRadius = DEFAULT_BORDER_RADIUS,
   stickyItemWidth,
   stickyItemHeight,
   stickyItemBackgroundColors,

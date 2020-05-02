@@ -1,7 +1,7 @@
 import type { FlatListProps } from 'react-native';
 import Animated from 'react-native-reanimated';
 
-export interface StickyItemProps extends StickyItemConfig {
+export interface StickyItemProps extends Required<StickyItemConfig> {
   x: Animated.Value<number>;
 }
 
@@ -22,8 +22,8 @@ export interface StickyItemBackgroundProps
 export interface StickyItemConfig {
   itemWidth: number;
   itemHeight: number;
-  separatorSize: number;
-  borderRadius: number;
+  separatorSize?: number;
+  borderRadius?: number;
   stickyItemWidth: number;
   stickyItemHeight: number;
   stickyItemBackgroundColors: string[];

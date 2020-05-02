@@ -33,7 +33,7 @@ const StickyItemBackground = ({
   separatorSize,
   borderRadius,
   stickyItemWidth,
-  stickyItemBackgroundColors = ['#555', '#000'],
+  stickyItemBackgroundColors,
 }: StickyItemBackgroundProps) => {
   const adjustedBorderRadius = borderRadius === 0 ? 0.0001 : borderRadius;
   const stickySize = stickyItemWidth + separatorSize * 2;
