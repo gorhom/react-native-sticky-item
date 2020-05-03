@@ -1,6 +1,6 @@
 {
   "name": "@gorhom/sticky-item",
-  "version": "0.1.0",
+  "version": "1.0.0",
   "description": "An interactive sticky item inspired by Facebook Stories.",
   "main": "lib/commonjs/index.js",
   "module": "lib/module/index.js",
@@ -42,6 +42,7 @@
     "@release-it/conventional-changelog": "^1.1.4",
     "@types/react": "^16.9.34",
     "@types/react-native": "0.62.5",
+    "auto-changelog": "^2.0.0",
     "eslint": "^6.8.0",
     "eslint-config-prettier": "^6.11.0",
     "eslint-plugin-prettier": "^3.1.3",
