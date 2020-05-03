@@ -1,5 +1,5 @@
-import React, { useMemo, useRef } from 'react';
-import { View } from 'react-native';
+import React, { useMemo, useRef, useCallback, useEffect } from 'react';
+import { View, Dimensions } from 'react-native';
 import Animated, {
   event,
   useCode,
@@ -24,6 +24,8 @@ import {
 import type { StickyItemFlatListProps } from './types';
 
 const AnimatedFlatList = Animated.createAnimatedComponent(FlatList);
+
+const SCREEN_WIDTH = Dimensions.get('window').width;
 
 function StickyItemFlatList<T>({
   itemWidth,
@@ -54,6 +56,29 @@ function StickyItemFlatList<T>({
   );
   //#endregion
 
+  //#region methods
+  const getHitSlop = useCallback(
+    isMinimized => {
+      const startPosition = isMinimized ? 0 : -separatorSize;
+      const endPosition = isMinimized
+        ? -(SCREEN_WIDTH - (stickyItemWidth + separatorSize * 2))
+        : -(SCREEN_WIDTH - separatorSize - itemWidth);
+
+      return {
+        top: isMinimized
+          ? -(itemHeight / 2 - (stickyItemWidth + separatorSize * 2) / 2)
+          : 0,
+        right: isRTL ? startPosition : endPosition,
+        left: isRTL ? endPosition : startPosition,
+        bottom: isMinimized
+          ? -(itemHeight / 2 - (stickyItemWidth + separatorSize * 2) / 2)
+          : 0,
+      };
+    },
+    [itemWidth, itemHeight, stickyItemWidth, separatorSize, isRTL]
+  );
+  //#endregion
+
   //#region gesture
   const [x, tapState] = useValues([0, State.UNDETERMINED]);
   const tapGestures = useGestureHandler({ state: tapState });
@@ -75,22 +100,22 @@ function StickyItemFlatList<T>({
       },
     },
   ]);
+  //#endregion
+
+  //#region effects
   useCode(
     () =>
-      cond(
-        eq(tapState, State.END),
-        call([], () => {
+      cond(eq(tapState, State.END), [
+        call([tapState], args => {
+          console.log(args);
           if (onStickyItemPress) {
             onStickyItemPress();
           }
         }),
-        set(tapState, State.UNDETERMINED)
-      ),
+        set(tapState, State.UNDETERMINED),
+      ]),
     [tapState]
   );
-  //#endregion
-
-  // effect
   useCode(
     () =>
       onChange(
@@ -99,36 +124,28 @@ function StickyItemFlatList<T>({
           if (tapRef.current) {
             const isMinimized = args[0] > 0;
             // @ts-ignore
-            tapRef.current.setNativeProps({
-              hitSlop: {
-                top: isMinimized
-                  ? -((itemHeight - (stickyItemWidth + separatorSize * 2)) / 2)
-                  : 0,
-                [isRTL ? 'right' : 'left']: isMinimized ? 0 : -separatorSize,
-                width: isMinimized
-                  ? stickyItemWidth + separatorSize * 2
-                  : itemWidth,
-                height: isMinimized
-                  ? stickyItemWidth + separatorSize * 2
-                  : itemHeight,
-              },
-            });
+            tapRef.current.setNativeProps({ hitSlop: getHitSlop(isMinimized) });
           }
         })
       ),
     [x, itemWidth, itemHeight, stickyItemWidth, stickyItemWidth, separatorSize]
   );
+  /**
+   * @DEV
+   * to fix stick item position with fast refresh
+   */
+  useEffect(() => {
+    x.setValue(0);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+  //#endregion
+
   // render
   const renderSeparator = () => <View style={{ width: separatorSize }} />;
   return (
     <TapGestureHandler
       ref={tapRef}
-      hitSlop={{
-        top: 0,
-        [isRTL ? 'right' : 'left']: -separatorSize,
-        width: itemWidth,
-        height: itemHeight,
-      }}
+      hitSlop={getHitSlop(false)}
       waitFor={flatlistRef}
       {...tapGestures}
     >
@@ -146,6 +163,7 @@ function StickyItemFlatList<T>({
           decelerationRate={'fast'}
           snapToAlignment={'start'}
           snapToInterval={itemWidth + separatorSize}
+          initialScrollIndex={0}
           onScroll={onScroll}
           onScrollAnimationEnd={onScrollEnd}
         />
