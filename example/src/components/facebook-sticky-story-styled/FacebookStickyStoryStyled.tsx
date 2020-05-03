@@ -14,12 +14,9 @@ const FacebookStickyStory = ({
   stickyItemHeight,
   separatorSize,
   borderRadius,
+  isRTL,
 }: StickyItemContentProps) => {
   const stickyScaleX = stickyItemWidth / itemWidth;
-  const stickyScaleY = stickyItemHeight / itemHeight;
-  const scaledSpaceX = (separatorSize * 2) / itemWidth;
-  const scaledSpaceY = (separatorSize * 2) / itemHeight;
-  const containerScaleX = stickyScaleX + scaledSpaceX;
 
   //#region thumbnail
   const animatedThumbnailScale = interpolate(x, {
@@ -27,24 +24,30 @@ const FacebookStickyStory = ({
     outputRange: [1, stickyScaleX],
     extrapolate: Extrapolate.CLAMP,
   });
+  const animatedThumbnailTranslateX = interpolate(x, {
+    inputRange: [0, threshold],
+    outputRange: [0, isRTL ? separatorSize : -separatorSize],
+    extrapolate: Extrapolate.CLAMP,
+  });
   const animatedThumbnailBorderRadius = interpolate(x, {
     inputRange: [0, threshold],
     outputRange: [borderRadius, itemWidth],
     extrapolate: Extrapolate.CLAMP,
   });
-
   const thumbnailStyle = [
     styles.thumbnail,
     {
+      top: -1,
       width: itemWidth,
       height: itemWidth,
       borderRadius: animatedThumbnailBorderRadius,
       transform: transformOrigin(
         {
-          x: itemWidth / 2 - separatorSize * 2,
-          y: itemWidth / 2 + separatorSize,
+          x: (itemWidth / 2) * (isRTL ? -1 : 1),
+          y: itemHeight / 2 + stickyItemHeight / 2 - itemWidth / 2,
         },
         {
+          translateX: animatedThumbnailTranslateX,
           scale: animatedThumbnailScale,
         }
       ) as Animated.AnimatedTransform,
@@ -52,16 +55,18 @@ const FacebookStickyStory = ({
   ];
   //#endregion
 
-  console.log(itemWidth);
   //#region icon
   const animatedIconTranslateX = interpolate(x, {
     inputRange: [0, threshold],
-    outputRange: [-(stickyItemWidth / 2), stickyItemWidth / 2 - separatorSize],
+    outputRange: [
+      itemWidth / 2 - stickyItemWidth / 2,
+      isRTL ? 0 : itemWidth - stickyItemWidth / 2 - separatorSize,
+    ],
     extrapolate: Extrapolate.CLAMP,
   });
   const animatedIconTranslateY = interpolate(x, {
     inputRange: [0, threshold],
-    outputRange: [0, -(separatorSize * 2)],
+    outputRange: [itemHeight / 2, itemHeight / 2 - separatorSize / 2],
     extrapolate: Extrapolate.CLAMP,
   });
   const animatedIconScale = interpolate(x, {
@@ -76,7 +81,10 @@ const FacebookStickyStory = ({
       width: stickyItemWidth,
       height: stickyItemWidth,
       transform: transformOrigin(
-        { x: 0, y: 0 },
+        {
+          x: 0,
+          y: 0,
+        },
         {
           translateX: animatedIconTranslateX,
           translateY: animatedIconTranslateY,
@@ -115,7 +123,9 @@ const FacebookStickyStory = ({
   return (
     <>
       <Animated.View style={thumbnailStyle} />
-      <Animated.Text style={textStyle}>Create a story</Animated.Text>
+      <Animated.Text style={textStyle}>
+        {isRTL ? `إضافة إلى قصتك` : `Create a story`}
+      </Animated.Text>
       <Animated.View style={iconStyle} />
     </>
   );

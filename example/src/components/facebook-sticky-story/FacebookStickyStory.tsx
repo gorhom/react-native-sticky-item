@@ -4,6 +4,7 @@ import Animated, { interpolate, Extrapolate } from 'react-native-reanimated';
 import { transformOrigin } from 'react-native-redash';
 import type { StickyItemContentProps } from '@gorhom/sticky-item';
 import { styles } from './styles';
+import { View } from 'react-native';
 
 const FacebookStickyStory = ({
   x,
@@ -14,17 +15,19 @@ const FacebookStickyStory = ({
   stickyItemHeight,
   separatorSize,
   borderRadius,
+  isRTL,
 }: StickyItemContentProps) => {
   const stickyScaleX = stickyItemWidth / itemWidth;
-  const stickyScaleY = stickyItemHeight / itemHeight;
-  const scaledSpaceX = (separatorSize * 2) / itemWidth;
-  const scaledSpaceY = (separatorSize * 2) / itemHeight;
-  const containerScaleX = stickyScaleX + scaledSpaceX;
 
   //#region thumbnail
   const animatedThumbnailScale = interpolate(x, {
     inputRange: [0, threshold],
     outputRange: [1, stickyScaleX],
+    extrapolate: Extrapolate.CLAMP,
+  });
+  const animatedThumbnailTranslateX = interpolate(x, {
+    inputRange: [0, threshold],
+    outputRange: [0, isRTL ? separatorSize : -separatorSize],
     extrapolate: Extrapolate.CLAMP,
   });
   const animatedThumbnailBorderRadius = interpolate(x, {
@@ -41,10 +44,11 @@ const FacebookStickyStory = ({
       borderRadius: animatedThumbnailBorderRadius,
       transform: transformOrigin(
         {
-          x: itemWidth / 2 - separatorSize * 2,
-          y: itemWidth / 2 + separatorSize,
+          x: (itemWidth / 2) * (isRTL ? -1 : 1),
+          y: itemHeight / 2 + stickyItemHeight / 2 - itemWidth / 2,
         },
         {
+          translateX: animatedThumbnailTranslateX,
           scale: animatedThumbnailScale,
         }
       ) as Animated.AnimatedTransform,
@@ -52,16 +56,18 @@ const FacebookStickyStory = ({
   ];
   //#endregion
 
-  console.log(itemWidth);
   //#region icon
   const animatedIconTranslateX = interpolate(x, {
     inputRange: [0, threshold],
-    outputRange: [-(stickyItemWidth / 2), stickyItemWidth / 2 - separatorSize],
+    outputRange: [
+      itemWidth / 2 - stickyItemWidth / 2,
+      isRTL ? 0 : itemWidth - separatorSize * 2 - stickyItemWidth / 2,
+    ],
     extrapolate: Extrapolate.CLAMP,
   });
   const animatedIconTranslateY = interpolate(x, {
     inputRange: [0, threshold],
-    outputRange: [0, -(separatorSize * 2)],
+    outputRange: [itemHeight / 2, itemHeight / 2 - separatorSize],
     extrapolate: Extrapolate.CLAMP,
   });
   const animatedIconScale = interpolate(x, {
@@ -114,8 +120,46 @@ const FacebookStickyStory = ({
 
   return (
     <>
+      {/* <View
+        style={{
+          position: 'absolute',
+          [isRTL ? 'left' : 'right']: 0,
+          top: 0,
+          bottom: 0,
+          opacity: 0.5,
+          width: separatorSize,
+          backgroundColor: 'red',
+        }}
+      />
+      <View
+        style={{
+          position: 'absolute',
+          [isRTL ? 'left' : 'right']: stickyItemWidth + separatorSize,
+
+          // right: stickyItemWidth + separatorSize,
+          top: 0,
+          bottom: 0,
+          opacity: 0.5,
+          width: separatorSize,
+          backgroundColor: 'white',
+        }}
+      />
+      <View
+        style={{
+          position: 'absolute',
+          [isRTL ? 'left' : 'right']: separatorSize,
+          top: itemHeight / 2 - stickyItemHeight / 2,
+          bottom: 0,
+          opacity: 1,
+          width: stickyItemWidth,
+          height: stickyItemHeight,
+          backgroundColor: 'blue',
+        }}
+      /> */}
       <Animated.View style={thumbnailStyle} />
-      <Animated.Text style={textStyle}>Create a story</Animated.Text>
+      <Animated.Text style={textStyle}>
+        {isRTL ? `إضافة إلى قصتك` : `Create a story`}
+      </Animated.Text>
       <Animated.View style={iconStyle} />
     </>
   );

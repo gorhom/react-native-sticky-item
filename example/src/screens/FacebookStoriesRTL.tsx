@@ -18,10 +18,10 @@ const data = [...Array(20)]
 
 export const STORY_WIDTH = 90;
 export const STORY_HEIGHT = 150;
-const SEPARATOR_SIZE = 8;
+const SEPARATOR_SIZE = 10;
 const BORDER_RADIUS = 10;
 
-const FacebookStoriesStyled = () => {
+const FacebookStoriesRTL = () => {
   const { params } = useRoute();
   // @ts-ignore
   const { title } = params;
@@ -59,6 +59,7 @@ const FacebookStoriesStyled = () => {
           stickyItemBackgroundColors={['#222', '#000']}
           stickyItemContent={FacebookStickyStoryStyled}
           onStickyItemPress={handleStickyItemPress}
+          isRTL={true}
           data={data}
           renderItem={renderItem}
         />
@@ -75,6 +76,7 @@ const styles = StyleSheet.create({
     backgroundColor: '#000',
   },
   text: {
+    textAlign: 'right',
     marginHorizontal: SEPARATOR_SIZE * 2,
     marginBottom: SEPARATOR_SIZE,
     fontSize: 43,
@@ -84,4 +86,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default FacebookStoriesStyled;
+export default FacebookStoriesRTL;

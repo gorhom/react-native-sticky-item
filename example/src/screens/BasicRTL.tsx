@@ -9,19 +9,19 @@ import {
 } from 'react-native';
 import StickyItemFlatList from '@gorhom/sticky-item';
 import DummyItem from '../components/dummy-item';
-import FacebookStickyStoryStyled from '../components/facebook-sticky-story-styled';
+import BasicSticky from '../components/basic-sticky';
 import { useRoute } from '@react-navigation/native';
 
 const data = [...Array(20)]
   .fill(0)
   .map((_, index) => ({ id: `item-${index}` }));
 
-export const STORY_WIDTH = 90;
-export const STORY_HEIGHT = 150;
-const SEPARATOR_SIZE = 8;
-const BORDER_RADIUS = 10;
+export const STORY_WIDTH = 200;
+export const STORY_HEIGHT = 100;
+const SEPARATOR_SIZE = 10;
+const BORDER_RADIUS = 0;
 
-const FacebookStoriesStyled = () => {
+const BasicRTL = () => {
   const { params } = useRoute();
   // @ts-ignore
   const { title } = params;
@@ -29,7 +29,7 @@ const FacebookStoriesStyled = () => {
   // styles
   const containerStyle = {
     paddingVertical: SEPARATOR_SIZE * 2,
-    backgroundColor: '#111',
+    backgroundColor: 'white',
   };
 
   // methods
@@ -38,15 +38,15 @@ const FacebookStoriesStyled = () => {
   // render
   const renderItem = () => (
     <DummyItem
+      borderRadius={BORDER_RADIUS}
       width={STORY_WIDTH}
       height={STORY_HEIGHT}
-      borderRadius={BORDER_RADIUS}
-      backgroundColor={'#333'}
+      backgroundColor={'#dfdfdf'}
     />
   );
   return (
     <SafeAreaView style={styles.root}>
-      <StatusBar barStyle="light-content" />
+      <StatusBar barStyle="dark-content" />
       <Text style={styles.text}>{title}</Text>
       <View style={containerStyle}>
         <StickyItemFlatList
@@ -54,10 +54,11 @@ const FacebookStoriesStyled = () => {
           itemHeight={STORY_HEIGHT}
           separatorSize={SEPARATOR_SIZE}
           borderRadius={BORDER_RADIUS}
-          stickyItemWidth={24}
-          stickyItemHeight={24}
-          stickyItemBackgroundColors={['#222', '#000']}
-          stickyItemContent={FacebookStickyStoryStyled}
+          stickyItemWidth={36}
+          stickyItemHeight={36}
+          isRTL={true}
+          stickyItemBackgroundColors={['#F8F8FA', '#2d88ff']}
+          stickyItemContent={BasicSticky}
           onStickyItemPress={handleStickyItemPress}
           data={data}
           renderItem={renderItem}
@@ -72,9 +73,10 @@ const styles = StyleSheet.create({
     flex: 1,
     flexDirection: 'column',
     justifyContent: 'flex-start',
-    backgroundColor: '#000',
+    backgroundColor: '#CACACD',
   },
   text: {
+    textAlign: 'right',
     marginHorizontal: SEPARATOR_SIZE * 2,
     marginBottom: SEPARATOR_SIZE,
     fontSize: 43,
@@ -84,4 +86,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default FacebookStoriesStyled;
+export default BasicRTL;

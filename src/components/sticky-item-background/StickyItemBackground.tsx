@@ -34,6 +34,7 @@ const StickyItemBackground = ({
   borderRadius,
   stickyItemWidth,
   stickyItemBackgroundColors,
+  isRTL,
 }: StickyItemBackgroundProps) => {
   const adjustedBorderRadius = borderRadius === 0 ? 0.0001 : borderRadius;
   const stickySize = stickyItemWidth + separatorSize * 2;
@@ -51,14 +52,14 @@ const StickyItemBackground = ({
         br: adjustedBorderRadius,
       }),
       generatePathData({
-        x: itemWidth - stickyItemWidth - separatorSize * 2,
+        x: isRTL ? 0 : itemWidth - stickyItemWidth - separatorSize * 2,
         y: itemHeight / 2 - stickySize / 2,
         width: stickySize,
         height: stickySize,
-        tl: 0.0001,
-        bl: 0.0001,
-        tr: stickySize / 2,
-        br: stickySize / 2,
+        tl: isRTL ? stickySize / 2 : 0.0001,
+        bl: isRTL ? stickySize / 2 : 0.0001,
+        tr: isRTL ? 0.0001 : stickySize / 2,
+        br: isRTL ? 0.0001 : stickySize / 2,
       }),
     ],
     [
@@ -68,6 +69,7 @@ const StickyItemBackground = ({
       separatorSize,
       stickyItemWidth,
       stickySize,
+      isRTL,
     ]
   );
 

@@ -3,8 +3,10 @@ import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
 import RootScreen from './screens/Root';
 import BasicScreen from './screens/Basic';
+import BasicRTLScreen from './screens/BasicRTL';
 import FacebookStoriesScreen from './screens/FacebookStories';
 import FacebookStoriesStyledScreen from './screens/FacebookStoriesStyled';
+import FacebookStoriesRTLScreen from './screens/FacebookStoriesRTL';
 
 const Stack = createStackNavigator();
 
@@ -21,6 +23,13 @@ export default function App() {
           component={BasicScreen}
         />
         <Stack.Screen
+          name="BasicRTL"
+          initialParams={{
+            title: `בסיסי`,
+          }}
+          component={BasicRTLScreen}
+        />
+        <Stack.Screen
           name="FacebookStories"
           initialParams={{
             title: 'Facebook Stories',
@@ -33,6 +42,13 @@ export default function App() {
             title: 'Facebook Stories Styled',
           }}
           component={FacebookStoriesStyledScreen}
+        />
+        <Stack.Screen
+          name="FacebookStoriesRTL"
+          initialParams={{
+            title: 'فيس بوك قصص',
+          }}
+          component={FacebookStoriesRTLScreen}
         />
       </Stack.Navigator>
     </NavigationContainer>
