@@ -103,14 +103,14 @@ const FacebookStickyStory = ({
   });
   const animatedTextTranslateY = interpolate(x, {
     inputRange: [0, threshold * 0.6],
-    outputRange: [stickyItemHeight, 0],
+    outputRange: [itemHeight / 2 + itemHeight / 4, itemHeight / 2],
     extrapolate: Extrapolate.CLAMP,
   });
   const textStyle = [
     styles.text,
     {
       opacity: animatedTextOpacity,
-      paddingHorizontal: separatorSize,
+      paddingHorizontal: separatorSize * 2,
       transform: [
         {
           translateY: animatedTextTranslateY,

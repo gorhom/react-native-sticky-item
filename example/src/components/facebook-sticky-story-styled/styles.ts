@@ -1,4 +1,4 @@
-import { StyleSheet } from 'react-native';
+import { StyleSheet, Platform } from 'react-native';
 
 export const styles = StyleSheet.create({
   thumbnail: {
@@ -11,9 +11,9 @@ export const styles = StyleSheet.create({
   text: {
     position: 'absolute',
     width: '100%',
-    top: '50%',
     textAlign: 'center',
-    fontSize: 12,
+    lineHeight: 14,
+    fontSize: Platform.OS === 'ios' ? 12 : 14,
     fontWeight: '500',
     color: 'white',
   },

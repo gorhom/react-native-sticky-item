@@ -6,11 +6,12 @@ import {
   StatusBar,
   Text,
   Alert,
+  Platform,
 } from 'react-native';
+import { useRoute } from '@react-navigation/native';
 import StickyItemFlatList from '@gorhom/sticky-item';
 import DummyItem from '../components/dummy-item';
 import FacebookStickyStory from '../components/facebook-sticky-story';
-import { useRoute } from '@react-navigation/native';
 
 const data = [...Array(20)]
   .fill(0)
@@ -78,7 +79,7 @@ const styles = StyleSheet.create({
     marginHorizontal: SEPARATOR_SIZE * 2,
     marginBottom: SEPARATOR_SIZE,
     fontSize: 43,
-    fontWeight: '900',
+    fontWeight: Platform.OS === 'ios' ? '900' : 'bold',
     textTransform: 'uppercase',
     color: '#2d88ff',
   },
