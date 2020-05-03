@@ -70,7 +70,9 @@ const BasicSticky = ({
   return (
     <>
       <Animated.Text style={plusStyle}>+</Animated.Text>
-      <Animated.Text style={textStyle}>Add</Animated.Text>
+      <Animated.Text style={textStyle}>
+        {isRTL ? 'להוסיף' : 'Add'}
+      </Animated.Text>
     </>
   );
 };
