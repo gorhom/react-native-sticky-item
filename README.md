@@ -24,26 +24,98 @@ npm install @gorhom/sticky-item
 ## Usage
 
 ```tsx
+...
+import StickyItemFlatList from '@gorhom/sticky-item';
+
+// dummy data
+const data = [...Array(20)]
+  .fill(0)
+  .map((_, index) => ({ id: `item-${index}` }));
+
+// configs
+const ITEM_WIDTH = 90;
+const ITEM_HEIGHT = 150;
+const STICKY_ITEM_WIDTH = 24;
+const STICKY_ITEM_HEIGHT = 24;
+const STICKY_ITEM_BACKGROUNDS = ['#222', '#000'];
+const SEPARATOR_SIZE = 8;
+const BORDER_RADIUS = 10;
+
+const StickyItemView = ({
+  x,
+  threshold,
+  itemWidth,
+  itemHeight,
+  stickyItemWidth,
+  stickyItemHeight,
+  separatorSize,
+  isRTL,
+}) => {
+
+  const amazingAnimation = {
+    // here you add your custom interactive animation 
+    // based on the animated value `x`
+  }
+
+  return <Animated.View style={amazingAnimation} />
+}
+
+const App = () => {
+  // methods
+  const handleStickyItemPress = () => Alert.alert('Sticky Item Pressed');
+
+  // render
+  const renderItem = ({ item, index}) => (
+    <View
+      key={`item-${index}`}
+      style={{
+        backgroundColor: 'red',
+        width: ITEM_WIDTH,
+        height: ITEM_HEIGHT,
+      }}
+    />
+  )
+  return (
+    <StickyItemFlatList
+      itemWidth={ITEM_WIDTH}
+      itemHeight={ITEM_HEIGHT}
+      separatorSize={SEPARATOR_SIZE}
+      borderRadius={BORDER_RADIUS}
+      stickyItemWidth={STICKY_ITEM_WIDTH}
+      stickyItemHeight={STICKY_ITEM_HEIGHT}
+      stickyItemBackgroundColors={STICKY_ITEM_BACKGROUNDS}
+      stickyItemContent={StickyItemView}
+      onStickyItemPress={handleStickyItemPress}
+      data={data}
+      renderItem={renderItem}
+    />
+  )
+}
+
+export default App
 ```
 
 ## Props
 
-| name                         | description                                                                                       | required | type                              | default |
-| ---------------------------- | ------------------------------------------------------------------------------------------------- | -------- | --------------------------------- | ------- |
-| `itemWidth`                  | Item's width.                                                                                     | YES      | number                            |         |
-| `itemHeight`                 | Item's height.                                                                                    | YES      | number                            |         |
-| `separatorSize`              | FlatList's separator width.                                                                       | NO       | number                            | 10      |
-| `borderRadius`               | Item & sticky border radius.                                                                      | NO       | number                            | 15      |
-| `stickyItemWidth`            | Sticky item's width.                                                                              | YES      | number                            |         |
-| `stickyItemHeight`           | Sticky item's height.                                                                             | YES      | number                            |         |
-| `stickyItemBackgroundColors` | Sticky item's two background colors, one when sticky item is extended another when it's minimize. | YES      | string[]                          |         |
-| `stickyItemContent`          | Sticky item's content component.                                                                  | YES      | [`ReactNode`](./src/types.ts#L30) |         |
-| `isRTL`                      | FlatList' layout direction.                                                                       | NO       | boolean                           | false   |
-| `onStickyItemPress`          | Callback when sticky item gets pressed.                                                           | NO       | function                          |         |
+| name                         | description                                                                                       | required | type                                                | default |
+| ---------------------------- | ------------------------------------------------------------------------------------------------- | -------- | --------------------------------------------------- | ------- |
+| `itemWidth`                  | Item's width.                                                                                     | YES      | number                                              |         |
+| `itemHeight`                 | Item's height.                                                                                    | YES      | number                                              |         |
+| `separatorSize`              | FlatList's separator width.                                                                       | NO       | number                                              | 10      |
+| `borderRadius`               | Item & sticky border radius.                                                                      | NO       | number                                              | 15      |
+| `stickyItemWidth`            | Sticky item's width.                                                                              | YES      | number                                              |         |
+| `stickyItemHeight`           | Sticky item's height.                                                                             | YES      | number                                              |         |
+| `stickyItemBackgroundColors` | Sticky item's two background colors, one when sticky item is extended another when it's minimize. | YES      | string[]                                            |         |
+| `stickyItemContent`          | Sticky item's content component.                                                                  | YES      | [`ReactNode`](./src/types.ts#L30)                   |         |
+| `isRTL`                      | FlatList' layout direction.                                                                       | NO       | boolean                                             | false   |
+| `onStickyItemPress`          | Callback when sticky item gets pressed.                                                           | NO       | function                                            |         |
+| `...FlatList Props`          | React Native FlatList props.                                                                      | NO       | [`FlatList`](https://reactnative.dev/docs/flatlist) |         |
 
 ## To Do
 
+- [ ] Write a detailed step-by-step instruction to create sticky interactive animation.
 - [ ] Add more examples.
+- [ ] Add vertical support ?.
 
 <h2 id="built-with">Built With ❤️</h2>
 
