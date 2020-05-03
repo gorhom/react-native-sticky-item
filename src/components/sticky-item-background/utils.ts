@@ -1,3 +1,4 @@
+// @ts-ignore
 const arcParameter = (rx, ry, xAxisRotation, largeArcFlag, sweepFlag, x, y) =>
   [
     rx,
