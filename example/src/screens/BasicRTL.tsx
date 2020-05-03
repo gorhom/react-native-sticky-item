@@ -30,7 +30,7 @@ const BasicRTL = () => {
   // styles
   const containerStyle = {
     paddingVertical: SEPARATOR_SIZE * 2,
-    backgroundColor: 'white',
+    backgroundColor: '#111',
   };
 
   // methods
@@ -42,12 +42,12 @@ const BasicRTL = () => {
       borderRadius={BORDER_RADIUS}
       width={STORY_WIDTH}
       height={STORY_HEIGHT}
-      backgroundColor={'#dfdfdf'}
+      backgroundColor={'#333'}
     />
   );
   return (
     <SafeAreaView style={styles.root}>
-      <StatusBar barStyle="dark-content" />
+      <StatusBar barStyle="light-content" />
       <Text style={styles.text}>{title}</Text>
       <View style={containerStyle}>
         <StickyItemFlatList
@@ -58,7 +58,7 @@ const BasicRTL = () => {
           stickyItemWidth={36}
           stickyItemHeight={36}
           isRTL={true}
-          stickyItemBackgroundColors={['#F8F8FA', '#2d88ff']}
+          stickyItemBackgroundColors={['#222', '#2d88ff']}
           stickyItemContent={BasicSticky}
           onStickyItemPress={handleStickyItemPress}
           data={data}
@@ -74,7 +74,7 @@ const styles = StyleSheet.create({
     flex: 1,
     flexDirection: 'column',
     justifyContent: 'flex-start',
-    backgroundColor: '#CACACD',
+    backgroundColor: '#000',
   },
   text: {
     textAlign: 'right',

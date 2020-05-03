@@ -17,6 +17,6 @@ export const styles = StyleSheet.create({
     textAlign: 'center',
     fontSize: 24,
     fontWeight: '900',
-    color: 'black',
+    color: '#979797',
   },
 });
