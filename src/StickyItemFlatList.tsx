@@ -120,8 +120,7 @@ const StickyItemFlatList = forwardRef(
     useCode(
       () =>
         cond(eq(tapState, State.END), [
-          call([tapState], args => {
-            console.log(args);
+          call([tapState], () => {
             if (onStickyItemPress) {
               onStickyItemPress();
             }
