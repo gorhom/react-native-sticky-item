@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useRef } from 'react';
 import {
   StyleSheet,
   View,
@@ -7,9 +7,11 @@ import {
   Text,
   Alert,
   Platform,
+  FlatList,
 } from 'react-native';
 import { useRoute } from '@react-navigation/native';
 import StickyItemFlatList from '@gorhom/sticky-item';
+import Button from '../components/button';
 import DummyItem from '../components/dummy-item';
 import BasicSticky from '../components/basic-sticky';
 
@@ -23,6 +25,7 @@ const SEPARATOR_SIZE = 10;
 const BORDER_RADIUS = 0;
 
 const Basic = () => {
+  const flatListRef = useRef<FlatList>(null);
   const { params } = useRoute();
   // @ts-ignore
   const { title } = params;
@@ -35,6 +38,18 @@ const Basic = () => {
 
   // methods
   const handleStickyItemPress = () => Alert.alert('Sticky Item Pressed');
+  const handleScrollToEnd = () => {
+    const flatlist = flatListRef.current;
+    if (flatlist) {
+      flatlist.scrollToEnd({ animated: true });
+    }
+  };
+  const handleScrollToStart = () => {
+    const flatlist = flatListRef.current;
+    if (flatlist) {
+      flatlist.scrollToOffset({ animated: true, offset: 0 });
+    }
+  };
 
   // render
   const renderItem = () => (
@@ -51,6 +66,7 @@ const Basic = () => {
       <Text style={styles.text}>{title}</Text>
       <View style={containerStyle}>
         <StickyItemFlatList
+          ref={flatListRef}
           itemWidth={STORY_WIDTH}
           itemHeight={STORY_HEIGHT}
           separatorSize={SEPARATOR_SIZE}
@@ -63,6 +79,10 @@ const Basic = () => {
           data={data}
           renderItem={renderItem}
         />
+      </View>
+      <View style={styles.buttons}>
+        <Button label="< Scroll To Start" onPress={handleScrollToStart} />
+        <Button label="Scroll To End >" onPress={handleScrollToEnd} />
       </View>
     </SafeAreaView>
   );
@@ -82,6 +102,13 @@ const styles = StyleSheet.create({
     fontWeight: Platform.OS === 'ios' ? '900' : 'bold',
     textTransform: 'uppercase',
     color: '#2d88ff',
+  },
+  buttons: {
+    marginTop: SEPARATOR_SIZE,
+    marginHorizontal: SEPARATOR_SIZE * 2,
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignContent: 'space-between',
   },
 });
 
