@@ -1,4 +1,4 @@
-import React, { useRef } from 'react';
+import React, { useRef, useCallback } from 'react';
 import {
   StyleSheet,
   View,
@@ -8,7 +8,9 @@ import {
   Alert,
   Platform,
   FlatList,
+  ListRenderItemInfo,
 } from 'react-native';
+import { TouchableOpacity } from 'react-native-gesture-handler';
 import { useRoute } from '@react-navigation/native';
 import StickyItemFlatList from '@gorhom/sticky-item';
 import Button from '../components/button';
@@ -50,15 +52,24 @@ const Basic = () => {
       flatlist.scrollToOffset({ animated: true, offset: 0 });
     }
   };
+  const handleScrollToIndex = useCallback(index => {
+    const flatlist = flatListRef.current;
+    if (flatlist) {
+      flatlist.scrollToIndex({ index });
+    }
+  }, []);
 
   // render
-  const renderItem = () => (
-    <DummyItem
-      borderRadius={BORDER_RADIUS}
-      width={STORY_WIDTH}
-      height={STORY_HEIGHT}
-      backgroundColor={'#dfdfdf'}
-    />
+  const renderItem = ({ index }: ListRenderItemInfo<{}>) => (
+    <TouchableOpacity onPress={() => Alert.alert(`Item ${index} Pressed`)}>
+      <DummyItem
+        index={index}
+        borderRadius={BORDER_RADIUS}
+        width={STORY_WIDTH}
+        height={STORY_HEIGHT}
+        backgroundColor={'#dfdfdf'}
+      />
+    </TouchableOpacity>
   );
   return (
     <SafeAreaView style={styles.root}>
@@ -67,6 +78,7 @@ const Basic = () => {
       <View style={containerStyle}>
         <StickyItemFlatList
           ref={flatListRef}
+          initialScrollIndex={1}
           itemWidth={STORY_WIDTH}
           itemHeight={STORY_HEIGHT}
           separatorSize={SEPARATOR_SIZE}
@@ -83,6 +95,11 @@ const Basic = () => {
       <View style={styles.buttons}>
         <Button label="< Scroll To Start" onPress={handleScrollToStart} />
         <Button label="Scroll To End >" onPress={handleScrollToEnd} />
+      </View>
+      <View style={styles.buttons}>
+        <Button label="Scroll To 4" onPress={() => handleScrollToIndex(4)} />
+        <Button label="Scroll To 9" onPress={() => handleScrollToIndex(9)} />
+        <Button label="Scroll To 14" onPress={() => handleScrollToIndex(14)} />
       </View>
     </SafeAreaView>
   );
