@@ -31,13 +31,16 @@ import {
 } from './constants';
 import type { StickyItemFlatListProps } from './types';
 
-const AnimatedFlatList = Animated.createAnimatedComponent(FlatList);
+const AnimatedFlatList = Animated.createAnimatedComponent(
+  FlatList
+) as typeof FlatList;
 
 const SCREEN_WIDTH = Dimensions.get('window').width;
 
 const StickyItemFlatList = forwardRef(
   <T extends {}>(props: StickyItemFlatListProps<T>, ref: Ref<FlatList<T>>) => {
     const {
+      initialScrollIndex = 0,
       itemWidth,
       itemHeight,
       separatorSize = DEFAULT_SEPARATOR_SIZE,
@@ -54,6 +57,13 @@ const StickyItemFlatList = forwardRef(
     // refs
     const flatListRef = useRef<FlatList<T>>(null);
     const tapRef = useRef<TapGestureHandler>(null);
+
+    //#region variables
+    const itemWidthWithSeparator = useMemo(() => itemWidth + separatorSize, [
+      itemWidth,
+      separatorSize,
+    ]);
+    //#endregion
 
     //#region styles
     const contentContainerStyle = useMemo(
@@ -88,6 +98,17 @@ const StickyItemFlatList = forwardRef(
         };
       },
       [itemWidth, itemHeight, stickyItemWidth, separatorSize, isRTL]
+    );
+    const getItemLayout = useCallback(
+      (_, index) => {
+        return {
+          length: itemWidthWithSeparator,
+          // sticky item + previous items width
+          offset: itemWidthWithSeparator + itemWidthWithSeparator * index,
+          index,
+        };
+      },
+      [itemWidthWithSeparator]
     );
     //#endregion
 
@@ -152,29 +173,32 @@ const StickyItemFlatList = forwardRef(
         separatorSize,
       ]
     );
-    /**
-     * @DEV
-     * to fix stick item position with fast refresh
-     */
     useEffect(() => {
+      /**
+       * @DEV
+       * to fix stick item position with fast refresh
+       */
       x.setValue(0);
+
+      if (tapRef.current) {
+        // @ts-ignore
+        tapRef.current.setNativeProps({
+          hitSlop: getHitSlop(initialScrollIndex === 0),
+        });
+      }
       // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, []);
+    }, [getHitSlop]);
     //#endregion
 
     // render
     const renderSeparator = () => <View style={{ width: separatorSize }} />;
     return (
-      <TapGestureHandler
-        ref={tapRef}
-        hitSlop={getHitSlop(false)}
-        waitFor={flatListRef}
-        {...tapGestures}
-      >
+      <TapGestureHandler ref={tapRef} waitFor={flatListRef} {...tapGestures}>
         <Animated.View>
           <AnimatedFlatList
             {...rest}
             ref={flatListRef}
+            initialScrollIndex={initialScrollIndex}
             inverted={isRTL}
             ItemSeparatorComponent={renderSeparator}
             contentContainerStyle={contentContainerStyle}
@@ -185,9 +209,9 @@ const StickyItemFlatList = forwardRef(
             decelerationRate={'fast'}
             snapToAlignment={'start'}
             snapToInterval={itemWidth + separatorSize}
-            initialScrollIndex={0}
             onScroll={onScroll}
             onScrollAnimationEnd={onScrollEnd}
+            getItemLayout={getItemLayout}
           />
           <StickyItem
             x={x}
