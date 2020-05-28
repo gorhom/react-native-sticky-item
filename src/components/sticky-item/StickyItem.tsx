@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useRef } from 'react';
 import { Dimensions } from 'react-native';
 import Animated, {
   multiply,
@@ -6,6 +6,10 @@ import Animated, {
   greaterThan,
   cond,
   add,
+  useCode,
+  onChange,
+  call,
+  eq,
 } from 'react-native-reanimated';
 import { transformOrigin } from 'react-native-redash';
 import StickyItemBackground from '../sticky-item-background';
@@ -26,6 +30,7 @@ const StickyItem = ({
   stickyItemBackgroundColors,
   isRTL,
 }: StickyItemProps) => {
+  const containerRef = useRef<Animated.View>(null);
   const threshold = itemWidth - stickyItemWidth - separatorSize;
   //#region Container
   const animatedTranslateX = multiply(
@@ -76,8 +81,46 @@ const StickyItem = ({
       <StickyItemContent {...props} />
     );
   };
+
+  // effects
+  /**
+   * @DEV
+   * here we manipulate the container `pointerEvents` to avoid
+   * the double press event on Android.
+   */
+  useCode(
+    () => [
+      onChange(animatedTranslateX, [
+        cond(
+          eq(animatedTranslateX, separatorSize),
+          call([], () => {
+            const container = containerRef.current;
+            if (container) {
+              // @ts-ignore
+              container.setNativeProps({
+                pointerEvents: 'none',
+              });
+            }
+          })
+        ),
+        cond(
+          eq(animatedTranslateX, (threshold - separatorSize) * -1),
+          call([], () => {
+            const container = containerRef.current;
+            if (container) {
+              // @ts-ignore
+              container.setNativeProps({
+                pointerEvents: 'auto',
+              });
+            }
+          })
+        ),
+      ]),
+    ],
+    [separatorSize, threshold]
+  );
   return (
-    <Animated.View pointerEvents={'none'} style={containerStyle}>
+    <Animated.View ref={containerRef} style={containerStyle}>
       <StickyItemBackground
         threshold={threshold}
         x={x}

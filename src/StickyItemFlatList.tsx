@@ -183,7 +183,7 @@ const StickyItemFlatList = forwardRef(
       if (tapRef.current) {
         // @ts-ignore
         tapRef.current.setNativeProps({
-          hitSlop: getHitSlop(initialScrollIndex === 0),
+          hitSlop: getHitSlop(initialScrollIndex !== 0),
         });
       }
       // eslint-disable-next-line react-hooks/exhaustive-deps

@@ -78,7 +78,6 @@ const Basic = () => {
       <View style={containerStyle}>
         <StickyItemFlatList
           ref={flatListRef}
-          initialScrollIndex={1}
           itemWidth={STORY_WIDTH}
           itemHeight={STORY_HEIGHT}
           separatorSize={SEPARATOR_SIZE}
