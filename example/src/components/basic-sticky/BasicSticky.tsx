@@ -1,8 +1,8 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 import React from 'react';
 import Animated, { interpolate, Extrapolate } from 'react-native-reanimated';
 import { transformOrigin } from 'react-native-redash';
 import type { StickyItemContentProps } from '@gorhom/sticky-item';
-import PlusSVG from '../../icons/PlusSVG';
 import { styles } from './styles';
 
 const BasicSticky = ({
@@ -15,9 +15,15 @@ const BasicSticky = ({
   separatorSize,
   isRTL,
 }: StickyItemContentProps) => {
+  const stickyScaleX = stickyItemWidth / itemWidth;
+  const stickyScaleY = stickyItemHeight / itemHeight;
+  const scaledSpaceX = (separatorSize * 2) / itemWidth;
+  const scaledSpaceY = (separatorSize * 2) / itemHeight;
+  const containerScaleX = stickyScaleX + scaledSpaceX;
+
   //#region plus
   const animatedPlusScale = interpolate(x, {
-    inputRange: [0, threshold],
+    inputRange: [0, threshold * 0.6],
     outputRange: [0, 1],
     extrapolate: Extrapolate.CLAMP,
   });
@@ -25,19 +31,13 @@ const BasicSticky = ({
     styles.plus,
     {
       width: stickyItemWidth,
-      height: stickyItemHeight,
-      [isRTL ? 'right' : 'left']: '50%',
+      lineHeight: stickyItemHeight,
+      [isRTL ? 'left' : 'right']: 0,
+      paddingHorizontal: separatorSize,
       transform: transformOrigin(
         { x: 0, y: 0 },
         {
-          translateX: interpolate(x, {
-            inputRange: [separatorSize, threshold],
-            outputRange: [
-              (stickyItemWidth / 2) * (isRTL ? 1 : -1),
-              (itemWidth / 2 - stickyItemWidth) * (isRTL ? -1 : 1),
-            ],
-            extrapolate: Extrapolate.CLAMP,
-          }),
+          translateX: isRTL ? separatorSize : -separatorSize,
           translateY: itemHeight / 2 - stickyItemHeight / 2,
           scale: animatedPlusScale,
         }
@@ -69,9 +69,7 @@ const BasicSticky = ({
 
   return (
     <>
-      <Animated.View style={plusStyle}>
-        <PlusSVG />
-      </Animated.View>
+      <Animated.Text style={plusStyle}>+</Animated.Text>
       <Animated.Text style={textStyle}>
         {isRTL ? 'להוסיף' : 'Add'}
       </Animated.Text>

@@ -7,9 +7,7 @@ import {
   Text,
   Alert,
   Platform,
-  ListRenderItemInfo,
 } from 'react-native';
-import { TouchableOpacity } from 'react-native-gesture-handler';
 import { useRoute } from '@react-navigation/native';
 import StickyItemFlatList from '@gorhom/sticky-item';
 import DummyItem from '../components/dummy-item';
@@ -21,8 +19,6 @@ const data = [...Array(20)]
 
 export const STORY_WIDTH = 200;
 export const STORY_HEIGHT = 100;
-const STICKY_ITEM_WIDTH = 56;
-const STICKY_ITEM_HEIGHT = 56;
 const SEPARATOR_SIZE = 10;
 const BORDER_RADIUS = 0;
 
@@ -41,16 +37,13 @@ const BasicRTL = () => {
   const handleStickyItemPress = () => Alert.alert('Sticky Item Pressed');
 
   // render
-  const renderItem = ({ index }: ListRenderItemInfo<{}>) => (
-    <TouchableOpacity onPress={() => Alert.alert(`Item ${index} Pressed`)}>
-      <DummyItem
-        index={index}
-        borderRadius={BORDER_RADIUS}
-        width={STORY_WIDTH}
-        height={STORY_HEIGHT}
-        backgroundColor={'#dfdfdf'}
-      />
-    </TouchableOpacity>
+  const renderItem = () => (
+    <DummyItem
+      borderRadius={BORDER_RADIUS}
+      width={STORY_WIDTH}
+      height={STORY_HEIGHT}
+      backgroundColor={'#333'}
+    />
   );
   return (
     <SafeAreaView style={styles.root}>
@@ -62,8 +55,8 @@ const BasicRTL = () => {
           itemHeight={STORY_HEIGHT}
           separatorSize={SEPARATOR_SIZE}
           borderRadius={BORDER_RADIUS}
-          stickyItemWidth={STICKY_ITEM_WIDTH}
-          stickyItemHeight={STICKY_ITEM_HEIGHT}
+          stickyItemWidth={36}
+          stickyItemHeight={36}
           isRTL={true}
           stickyItemBackgroundColors={['#222', '#2d88ff']}
           stickyItemContent={BasicSticky}

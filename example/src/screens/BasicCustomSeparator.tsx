@@ -21,15 +21,19 @@ const data = [...Array(20)]
 
 export const STORY_WIDTH = 200;
 export const STORY_HEIGHT = 100;
-const STICKY_ITEM_WIDTH = 56;
-const STICKY_ITEM_HEIGHT = 56;
-const SEPARATOR_SIZE = 40;
+const SEPARATOR_SIZE = 10;
 const BORDER_RADIUS = 0;
 
 const BasicCustomSeparator = () => {
   const { params } = useRoute();
   // @ts-ignore
   const { title } = params;
+
+  // styles
+  const containerStyle = {
+    paddingVertical: SEPARATOR_SIZE * 2,
+    backgroundColor: 'white',
+  };
 
   // methods
   const handleStickyItemPress = () => Alert.alert('Sticky Item Pressed');
@@ -58,14 +62,14 @@ const BasicCustomSeparator = () => {
     <SafeAreaView style={styles.root}>
       <StatusBar barStyle="dark-content" />
       <Text style={styles.text}>{title}</Text>
-      <View style={styles.container}>
+      <View style={containerStyle}>
         <StickyItemFlatList
           itemWidth={STORY_WIDTH}
           itemHeight={STORY_HEIGHT}
           separatorSize={SEPARATOR_SIZE}
           borderRadius={BORDER_RADIUS}
-          stickyItemWidth={STICKY_ITEM_WIDTH}
-          stickyItemHeight={STICKY_ITEM_HEIGHT}
+          stickyItemWidth={36}
+          stickyItemHeight={36}
           stickyItemBackgroundColors={['#F8F8FA', '#2d88ff']}
           stickyItemContent={BasicSticky}
           onStickyItemPress={handleStickyItemPress}
@@ -85,17 +89,20 @@ const styles = StyleSheet.create({
     justifyContent: 'flex-start',
     backgroundColor: '#CACACD',
   },
-  container: {
-    paddingVertical: 20,
-    backgroundColor: 'white',
-  },
   text: {
-    marginHorizontal: 20,
-    marginBottom: 20,
+    marginHorizontal: SEPARATOR_SIZE * 2,
+    marginBottom: SEPARATOR_SIZE,
     fontSize: 43,
     fontWeight: Platform.OS === 'ios' ? '900' : 'bold',
     textTransform: 'uppercase',
     color: '#2d88ff',
+  },
+  buttons: {
+    marginTop: SEPARATOR_SIZE,
+    marginHorizontal: SEPARATOR_SIZE * 2,
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignContent: 'space-between',
   },
   separatorLine: {
     position: 'absolute',

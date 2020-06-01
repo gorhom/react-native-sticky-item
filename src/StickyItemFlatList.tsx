@@ -93,29 +93,23 @@ const StickyItemFlatList = forwardRef(
     //#region methods
     const getHitSlop = useCallback(
       isMinimized => {
-        const verticalPosition = isMinimized
-          ? -((itemHeight - stickyItemHeight) / 2)
-          : 0;
         const startPosition = isMinimized ? 0 : -separatorSize;
         const endPosition = isMinimized
-          ? -(SCREEN_WIDTH - stickyItemWidth)
+          ? -(SCREEN_WIDTH - (stickyItemWidth + separatorSize * 2))
           : -(SCREEN_WIDTH - separatorSize - itemWidth);
 
         return {
-          top: verticalPosition,
+          top: isMinimized
+            ? -(itemHeight / 2 - (stickyItemWidth + separatorSize * 2) / 2)
+            : 0,
           right: isRTL ? startPosition : endPosition,
           left: isRTL ? endPosition : startPosition,
-          bottom: verticalPosition,
+          bottom: isMinimized
+            ? -(itemHeight / 2 - (stickyItemWidth + separatorSize * 2) / 2)
+            : 0,
         };
       },
-      [
-        itemWidth,
-        itemHeight,
-        stickyItemWidth,
-        stickyItemHeight,
-        separatorSize,
-        isRTL,
-      ]
+      [itemWidth, itemHeight, stickyItemWidth, separatorSize, isRTL]
     );
     const getItemLayout = useCallback(
       (_, index) => {
