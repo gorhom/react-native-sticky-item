@@ -1,4 +1,4 @@
-import React, { useRef } from 'react';
+import React, { useRef, useMemo } from 'react';
 import { Dimensions } from 'react-native';
 import Animated, {
   multiply,
@@ -10,8 +10,11 @@ import Animated, {
   onChange,
   call,
   eq,
+  interpolate,
+  Extrapolate,
+  Easing,
 } from 'react-native-reanimated';
-import { transformOrigin } from 'react-native-redash';
+import { transformOrigin, withTimingTransition } from 'react-native-redash';
 import StickyItemBackground from '../sticky-item-background';
 import { StickyItemProps } from '../../types';
 import { styles } from './styles';
@@ -20,10 +23,12 @@ const { width: SCREEN_WIDTH } = Dimensions.get('window');
 
 const StickyItem = ({
   x,
+  tapState,
   itemWidth,
   itemHeight,
   separatorSize,
   borderRadius,
+  stickyItemActiveOpacity,
   stickyItemWidth,
   stickyItemHeight,
   stickyItemContent: StickyItemContent,
@@ -45,19 +50,32 @@ const StickyItem = ({
     ),
     isRTL ? 1 : -1
   );
-  const containerStyle = [
-    styles.container,
-    {
-      width: itemWidth,
-      height: itemHeight,
-      transform: transformOrigin(
-        { x: itemWidth / 2, y: 0 },
-        {
-          translateX: animatedTranslateX,
-        }
-      ) as Animated.AnimatedTransform,
-    },
-  ];
+  const animatedOpacity = withTimingTransition(eq(tapState, 2), {
+    duration: 125,
+    easing: Easing.inOut(Easing.quad),
+  });
+  const containerStyle = useMemo(
+    () => [
+      styles.container,
+      {
+        width: itemWidth,
+        height: itemHeight,
+        opacity: interpolate(animatedOpacity, {
+          inputRange: [0, 1],
+          outputRange: [1, stickyItemActiveOpacity],
+          extrapolate: Extrapolate.CLAMP,
+        }),
+        transform: transformOrigin(
+          { x: itemWidth / 2, y: 0 },
+          {
+            translateX: animatedTranslateX,
+          }
+        ) as Animated.AnimatedTransform,
+      },
+    ],
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    [itemWidth, itemHeight, stickyItemActiveOpacity]
+  );
   //#endregion
 
   // render

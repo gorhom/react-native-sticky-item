@@ -29,6 +29,7 @@ import {
   DEFAULT_BORDER_RADIUS,
   DEFAULT_IS_RTL,
   DEFAULT_DECELERATION_RATE,
+  DEFAULT_STICKY_ITEM_ACTIVE_OPACITY,
 } from './constants';
 import type { StickyItemFlatListProps } from './types';
 
@@ -47,6 +48,7 @@ const StickyItemFlatList = forwardRef(
       itemHeight,
       separatorSize = DEFAULT_SEPARATOR_SIZE,
       borderRadius = DEFAULT_BORDER_RADIUS,
+      stickyItemActiveOpacity = DEFAULT_STICKY_ITEM_ACTIVE_OPACITY,
       stickyItemWidth,
       stickyItemHeight,
       stickyItemBackgroundColors,
@@ -195,7 +197,12 @@ const StickyItemFlatList = forwardRef(
     // render
     const renderSeparator = () => <View style={{ width: separatorSize }} />;
     return (
-      <TapGestureHandler ref={tapRef} waitFor={flatListRef} {...tapGestures}>
+      <TapGestureHandler
+        ref={tapRef}
+        waitFor={flatListRef}
+        shouldCancelWhenOutside={true}
+        {...tapGestures}
+      >
         <Animated.View>
           <AnimatedFlatList
             {...rest}
@@ -217,10 +224,12 @@ const StickyItemFlatList = forwardRef(
           />
           <StickyItem
             x={x}
+            tapState={tapState}
             itemWidth={itemWidth}
             itemHeight={itemHeight}
             separatorSize={separatorSize}
             borderRadius={borderRadius}
+            stickyItemActiveOpacity={stickyItemActiveOpacity}
             stickyItemWidth={stickyItemWidth}
             stickyItemHeight={stickyItemHeight}
             stickyItemBackgroundColors={stickyItemBackgroundColors}

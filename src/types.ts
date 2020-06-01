@@ -1,5 +1,6 @@
 import type { FlatListProps } from 'react-native';
 import Animated from 'react-native-reanimated';
+import { State } from 'react-native-gesture-handler';
 
 export interface StickyItemProps extends Required<StickyItemConfig> {
   /**
@@ -7,6 +8,12 @@ export interface StickyItemProps extends Required<StickyItemConfig> {
    * @type {Animated.Value<number>}
    */
   x: Animated.Value<number>;
+
+  /**
+   * Tap gesture state, this used for tap/press effect
+   * @type {Animated.Value<State>}
+   */
+  tapState: Animated.Value<State>;
 }
 
 export interface StickyItemContentProps
@@ -18,7 +25,10 @@ export interface StickyItemContentProps
 }
 
 export interface StickyItemBackgroundProps
-  extends Omit<StickyItemProps, 'stickyItemContent'> {
+  extends Omit<
+    StickyItemProps,
+    'stickyItemContent' | 'tapState' | 'stickyItemActiveOpacity'
+  > {
   threshold: number;
 }
 
@@ -45,6 +55,12 @@ export interface StickyItemConfig {
    * @default 15
    */
   borderRadius?: number;
+  /**
+   * Sticky item's active opacity.
+   * @type {number}
+   * @default 0.2
+   */
+  stickyItemActiveOpacity?: number;
   /**
    * Sticky item's width.
    * @type {number}
