@@ -15,6 +15,10 @@ const examples = [
         name: 'RTL',
         slug: 'BasicRTL',
       },
+      {
+        name: 'Custom Separator',
+        slug: 'BasicCustomSeparator',
+      },
     ],
   },
   {
