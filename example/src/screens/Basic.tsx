@@ -23,6 +23,8 @@ const data = [...Array(20)]
 
 export const STORY_WIDTH = 200;
 export const STORY_HEIGHT = 100;
+const STICKY_ITEM_WIDTH = 56;
+const STICKY_ITEM_HEIGHT = 56;
 const SEPARATOR_SIZE = 10;
 const BORDER_RADIUS = 0;
 
@@ -82,8 +84,8 @@ const Basic = () => {
           itemHeight={STORY_HEIGHT}
           separatorSize={SEPARATOR_SIZE}
           borderRadius={BORDER_RADIUS}
-          stickyItemWidth={36}
-          stickyItemHeight={36}
+          stickyItemWidth={STICKY_ITEM_WIDTH}
+          stickyItemHeight={STICKY_ITEM_HEIGHT}
           stickyItemBackgroundColors={['#F8F8FA', '#2d88ff']}
           stickyItemContent={BasicSticky}
           onStickyItemPress={handleStickyItemPress}
