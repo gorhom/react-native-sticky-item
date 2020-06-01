@@ -23,7 +23,7 @@ export const STORY_WIDTH = 200;
 export const STORY_HEIGHT = 100;
 const STICKY_ITEM_WIDTH = 56;
 const STICKY_ITEM_HEIGHT = 56;
-const SEPARATOR_SIZE = 20;
+const SEPARATOR_SIZE = 40;
 const BORDER_RADIUS = 0;
 
 const BasicCustomSeparator = () => {
