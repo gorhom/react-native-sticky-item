@@ -91,6 +91,15 @@ export interface StickyItemConfig {
   isRTL?: boolean;
 }
 
+export interface SeparatorConfig {
+  /**
+   * FlatList's separator width
+   * @type {number}
+   * @default 10
+   */
+  size: number;
+}
+
 export interface StickyItemFlatListProps<T>
   extends FlatListProps<T>,
     StickyItemConfig {
@@ -99,4 +108,10 @@ export interface StickyItemFlatListProps<T>
    * @type {() => void}
    */
   onStickyItemPress?: () => void;
+
+  /**
+   * Override `FlatList` prop, to add
+   * `SeparatorConfig` to `ItemSeparatorComponent`
+   */
+  ItemSeparatorComponent?: React.ComponentType<SeparatorConfig>;
 }

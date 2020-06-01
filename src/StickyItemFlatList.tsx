@@ -7,7 +7,7 @@ import React, {
   Ref,
   useImperativeHandle,
 } from 'react';
-import { View, Dimensions } from 'react-native';
+import { Dimensions } from 'react-native';
 import Animated, {
   event,
   useCode,
@@ -24,6 +24,7 @@ import {
 } from 'react-native-gesture-handler';
 import { useValues, useGestureHandler } from 'react-native-redash';
 import StickyItem from './components/sticky-item';
+import Separator from './components/separator';
 import {
   DEFAULT_SEPARATOR_SIZE,
   DEFAULT_BORDER_RADIUS,
@@ -55,6 +56,7 @@ const StickyItemFlatList = forwardRef(
       stickyItemContent,
       onStickyItemPress,
       isRTL = DEFAULT_IS_RTL,
+      ItemSeparatorComponent = Separator,
       ...rest
     } = props;
 
@@ -67,6 +69,12 @@ const StickyItemFlatList = forwardRef(
       itemWidth,
       separatorSize,
     ]);
+    const separatorProps = useMemo(
+      () => ({
+        size: separatorSize,
+      }),
+      [separatorSize]
+    );
     //#endregion
 
     //#region styles
@@ -195,7 +203,16 @@ const StickyItemFlatList = forwardRef(
     //#endregion
 
     // render
-    const renderSeparator = () => <View style={{ width: separatorSize }} />;
+    const renderSeparator = useCallback(() => {
+      if (typeof ItemSeparatorComponent === 'function') {
+        // @ts-ignore
+        return ItemSeparatorComponent(separatorProps);
+      } else {
+        // @ts-ignore
+        return <ItemSeparatorComponent size={separatorProps.size} />;
+      }
+    }, [ItemSeparatorComponent, separatorProps]);
+
     return (
       <TapGestureHandler
         ref={tapRef}

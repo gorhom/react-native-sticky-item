@@ -4,6 +4,7 @@ import { createStackNavigator } from '@react-navigation/stack';
 import RootScreen from './screens/Root';
 import BasicScreen from './screens/Basic';
 import BasicRTLScreen from './screens/BasicRTL';
+import BasicCustomSeparatorScreen from './screens/BasicCustomSeparator';
 import FacebookStoriesScreen from './screens/FacebookStories';
 import FacebookStoriesStyledScreen from './screens/FacebookStoriesStyled';
 import FacebookStoriesRTLScreen from './screens/FacebookStoriesRTL';
@@ -28,6 +29,13 @@ export default function App() {
             title: `בסיסי`,
           }}
           component={BasicRTLScreen}
+        />
+        <Stack.Screen
+          name="BasicCustomSeparator"
+          initialParams={{
+            title: 'Custom Separator',
+          }}
+          component={BasicCustomSeparatorScreen}
         />
         <Stack.Screen
           name="FacebookStories"
