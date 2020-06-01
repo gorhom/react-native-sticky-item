@@ -5,6 +5,7 @@ import React, {
   useEffect,
   forwardRef,
   Ref,
+  memo,
   useImperativeHandle,
 } from 'react';
 import { View, Dimensions } from 'react-native';
@@ -195,7 +196,13 @@ const StickyItemFlatList = forwardRef(
     //#endregion
 
     // render
-    const renderSeparator = () => <View style={{ width: separatorSize }} />;
+    function separatorPropsAreEqual() {
+      return true;
+    }
+    const renderSeparator = memo(
+      () => <View style={{ width: separatorSize }} />,
+      separatorPropsAreEqual,
+    );
     return (
       <TapGestureHandler
         ref={tapRef}
