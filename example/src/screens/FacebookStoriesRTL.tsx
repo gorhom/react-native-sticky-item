@@ -7,7 +7,9 @@ import {
   Text,
   Alert,
   Platform,
+  ListRenderItemInfo,
 } from 'react-native';
+import { TouchableOpacity } from 'react-native-gesture-handler';
 import { useRoute } from '@react-navigation/native';
 import StickyItemFlatList from '@gorhom/sticky-item';
 import DummyItem from '../components/dummy-item';
@@ -19,6 +21,8 @@ const data = [...Array(20)]
 
 export const STORY_WIDTH = 90;
 export const STORY_HEIGHT = 150;
+const STICKY_ITEM_WIDTH = 46;
+const STICKY_ITEM_HEIGHT = 46;
 const SEPARATOR_SIZE = 10;
 const BORDER_RADIUS = 10;
 
@@ -37,13 +41,16 @@ const FacebookStoriesRTL = () => {
   const handleStickyItemPress = () => Alert.alert('Sticky Item Pressed');
 
   // render
-  const renderItem = () => (
-    <DummyItem
-      width={STORY_WIDTH}
-      height={STORY_HEIGHT}
-      borderRadius={BORDER_RADIUS}
-      backgroundColor={'#333'}
-    />
+  const renderItem = ({ index }: ListRenderItemInfo<{}>) => (
+    <TouchableOpacity onPress={() => Alert.alert(`Item ${index} Pressed`)}>
+      <DummyItem
+        index={index}
+        borderRadius={BORDER_RADIUS}
+        width={STORY_WIDTH}
+        height={STORY_HEIGHT}
+        backgroundColor={'#333'}
+      />
+    </TouchableOpacity>
   );
   return (
     <SafeAreaView style={styles.root}>
@@ -55,8 +62,8 @@ const FacebookStoriesRTL = () => {
           itemHeight={STORY_HEIGHT}
           separatorSize={SEPARATOR_SIZE}
           borderRadius={BORDER_RADIUS}
-          stickyItemWidth={24}
-          stickyItemHeight={24}
+          stickyItemWidth={STICKY_ITEM_WIDTH}
+          stickyItemHeight={STICKY_ITEM_HEIGHT}
           stickyItemBackgroundColors={['#222', '#000']}
           stickyItemContent={FacebookStickyStoryStyled}
           onStickyItemPress={handleStickyItemPress}

@@ -3,11 +3,9 @@ import { StyleSheet } from 'react-native';
 export const styles = StyleSheet.create({
   plus: {
     position: 'absolute',
-    textTransform: 'uppercase',
-    textAlign: 'center',
-    fontSize: 34,
-    fontWeight: '500',
-    color: 'white',
+    alignContent: 'center',
+    justifyContent: 'center',
+    alignItems: 'center',
   },
   text: {
     position: 'absolute',
