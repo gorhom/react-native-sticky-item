@@ -28,6 +28,7 @@ import {
   DEFAULT_SEPARATOR_SIZE,
   DEFAULT_BORDER_RADIUS,
   DEFAULT_IS_RTL,
+  DEFAULT_DECELERATION_RATE,
 } from './constants';
 import type { StickyItemFlatListProps } from './types';
 
@@ -41,6 +42,7 @@ const StickyItemFlatList = forwardRef(
   <T extends {}>(props: StickyItemFlatListProps<T>, ref: Ref<FlatList<T>>) => {
     const {
       initialScrollIndex = 0,
+      decelerationRate = DEFAULT_DECELERATION_RATE,
       itemWidth,
       itemHeight,
       separatorSize = DEFAULT_SEPARATOR_SIZE,
@@ -206,7 +208,7 @@ const StickyItemFlatList = forwardRef(
             showsHorizontalScrollIndicator={false}
             scrollEventThrottle={1}
             pagingEnabled={true}
-            decelerationRate={'fast'}
+            decelerationRate={decelerationRate}
             snapToAlignment={'start'}
             snapToInterval={itemWidth + separatorSize}
             onScroll={onScroll}
