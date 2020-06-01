@@ -53,7 +53,7 @@ const StickyItemView = ({
 }) => {
 
   const amazingAnimation = {
-    // here you add your custom interactive animation 
+    // here you add your custom interactive animation
     // based on the animated value `x`
   }
 
@@ -103,6 +103,7 @@ export default App
 | `itemHeight`                 | Item's height.                                                                                    | YES      | number                                              |         |
 | `separatorSize`              | FlatList's separator width.                                                                       | NO       | number                                              | 10      |
 | `borderRadius`               | Item & sticky border radius.                                                                      | NO       | number                                              | 15      |
+| `stickyItemActiveOpacity`    | Sticky item's active opacity.                                                                     | YES      | number                                              | 0.25    |
 | `stickyItemWidth`            | Sticky item's width.                                                                              | YES      | number                                              |         |
 | `stickyItemHeight`           | Sticky item's height.                                                                             | YES      | number                                              |         |
 | `stickyItemBackgroundColors` | Sticky item's two background colors, one when sticky item is extended another when it's minimize. | YES      | string[]                                            |         |
