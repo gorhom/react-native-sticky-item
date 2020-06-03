@@ -13,7 +13,7 @@ import { TouchableOpacity } from 'react-native-gesture-handler';
 import { useRoute } from '@react-navigation/native';
 import StickyItemFlatList from '@gorhom/sticky-item';
 import DummyItem from '../components/dummy-item';
-import FacebookStickyStoryStyled from '../components/facebook-sticky-story-styled';
+import FacebookStickyStory from '../components/facebook-sticky-story';
 
 const data = [...Array(20)]
   .fill(0)
@@ -21,8 +21,8 @@ const data = [...Array(20)]
 
 export const STORY_WIDTH = 90;
 export const STORY_HEIGHT = 150;
-const STICKY_ITEM_WIDTH = 46;
-const STICKY_ITEM_HEIGHT = 46;
+const STICKY_ITEM_WIDTH = 36;
+const STICKY_ITEM_HEIGHT = 36;
 const SEPARATOR_SIZE = 8;
 const BORDER_RADIUS = 10;
 
@@ -65,7 +65,9 @@ const FacebookStoriesStyled = () => {
           stickyItemWidth={STICKY_ITEM_WIDTH}
           stickyItemHeight={STICKY_ITEM_HEIGHT}
           stickyItemBackgroundColors={['#222', '#000']}
-          stickyItemContent={FacebookStickyStoryStyled}
+          stickyItemContent={props => (
+            <FacebookStickyStory {...props} theme="dark" />
+          )}
           onStickyItemPress={handleStickyItemPress}
           data={data}
           renderItem={renderItem}

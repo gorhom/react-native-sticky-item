@@ -21,9 +21,9 @@ const data = [...Array(20)]
 
 export const STORY_WIDTH = 90;
 export const STORY_HEIGHT = 150;
-const STICKY_ITEM_WIDTH = 56;
-const STICKY_ITEM_HEIGHT = 56;
-const SEPARATOR_SIZE = 8;
+const STICKY_ITEM_WIDTH = 46;
+const STICKY_ITEM_HEIGHT = 46;
+const SEPARATOR_SIZE = 10;
 const BORDER_RADIUS = 15;
 
 const FacebookStories = () => {
@@ -33,7 +33,7 @@ const FacebookStories = () => {
 
   // styles
   const containerStyle = {
-    paddingVertical: SEPARATOR_SIZE * 2,
+    paddingVertical: SEPARATOR_SIZE,
     backgroundColor: 'white',
   };
 
@@ -64,7 +64,7 @@ const FacebookStories = () => {
           borderRadius={BORDER_RADIUS}
           stickyItemWidth={STICKY_ITEM_WIDTH}
           stickyItemHeight={STICKY_ITEM_HEIGHT}
-          stickyItemBackgroundColors={['#F8F8FA', '#FFF']}
+          stickyItemBackgroundColors={['#F8F8FA', '#fff']}
           stickyItemContent={FacebookStickyStory}
           onStickyItemPress={handleStickyItemPress}
           data={data}

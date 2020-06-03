@@ -1,12 +1,8 @@
 import { StyleSheet, Platform } from 'react-native';
 
 export const styles = StyleSheet.create({
-  thumbnail: {
-    backgroundColor: 'black',
-  },
-  icon: {
+  addIcon: {
     position: 'absolute',
-    borderWidth: 3,
     borderColor: 'white',
     backgroundColor: '#2d88ff',
   },
@@ -17,6 +13,5 @@ export const styles = StyleSheet.create({
     lineHeight: 14,
     fontSize: Platform.OS === 'ios' ? 12 : 14,
     fontWeight: '500',
-    color: 'black',
   },
 });

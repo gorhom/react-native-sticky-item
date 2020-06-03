@@ -13,7 +13,7 @@ import { TouchableOpacity } from 'react-native-gesture-handler';
 import { useRoute } from '@react-navigation/native';
 import StickyItemFlatList from '@gorhom/sticky-item';
 import DummyItem from '../components/dummy-item';
-import FacebookStickyStoryStyled from '../components/facebook-sticky-story-styled';
+import FacebookStickyStory from '../components/facebook-sticky-story';
 
 const data = [...Array(20)]
   .fill(0)
@@ -65,7 +65,9 @@ const FacebookStoriesRTL = () => {
           stickyItemWidth={STICKY_ITEM_WIDTH}
           stickyItemHeight={STICKY_ITEM_HEIGHT}
           stickyItemBackgroundColors={['#222', '#000']}
-          stickyItemContent={FacebookStickyStoryStyled}
+          stickyItemContent={props => (
+            <FacebookStickyStory {...props} theme="dark" />
+          )}
           onStickyItemPress={handleStickyItemPress}
           isRTL={true}
           data={data}
