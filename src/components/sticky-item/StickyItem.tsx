@@ -128,7 +128,7 @@ const StickyItem = ({
             if (container) {
               // @ts-ignore
               container.setNativeProps({
-                pointerEvents: 'auto',
+                pointerEvents: 'box-none',
               });
             }
           })
