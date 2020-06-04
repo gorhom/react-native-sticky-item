@@ -42,7 +42,6 @@ const StickyItemBackground = ({
   isRTL,
 }: StickyItemBackgroundProps) => {
   const adjustedBorderRadius = borderRadius === 0 ? 0.0001 : borderRadius;
-
   const paths = useMemo(
     () => [
       generatePathData({
@@ -76,6 +75,7 @@ const StickyItemBackground = ({
     ]
   );
 
+  //#region animations
   const animatedTransform = transformOrigin(
     {
       x: 0,
@@ -102,7 +102,9 @@ const StickyItemBackground = ({
     outputRange: [1, 16],
     extrapolate: Extrapolate.CLAMP,
   });
+  //#endregion
 
+  //#region styles
   const containerStyle = [
     styles.container,
     {
@@ -114,22 +116,23 @@ const StickyItemBackground = ({
         }
       : {},
   ];
+  //#endregion
 
+  // render
   return (
-    <>
-      <AnimatedSvg
-        style={containerStyle}
-        width={itemWidth}
-        height={itemHeight}
-        viewBox={`0 0 ${itemWidth} ${itemHeight}`}
-      >
-        <AnimatedPath
-          d={animatedPathData}
-          fill={animatedBackgroundColor}
-          fillRule="evenodd"
-        />
-      </AnimatedSvg>
-    </>
+    <AnimatedSvg
+      pointerEvents="none"
+      style={containerStyle}
+      width={itemWidth}
+      height={itemHeight}
+      viewBox={`0 0 ${itemWidth} ${itemHeight}`}
+    >
+      <AnimatedPath
+        d={animatedPathData}
+        fill={animatedBackgroundColor}
+        fillRule="evenodd"
+      />
+    </AnimatedSvg>
   );
 };
 

@@ -4,10 +4,8 @@ export const styles = StyleSheet.create({
   container: {
     position: 'absolute',
   },
-  thumbnail: {
-    backgroundColor: 'black',
-  },
-  button: {
-    ...StyleSheet.absoluteFillObject,
+  pressable: {
+    position: 'absolute',
+    backgroundColor: 'rgba(0,0,0,0.000000001)',
   },
 });

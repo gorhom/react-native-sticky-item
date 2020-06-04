@@ -1,14 +1,11 @@
-import React, { useRef, useMemo } from 'react';
-import { Dimensions } from 'react-native';
+import React, { useMemo } from 'react';
+import { Dimensions, View, ViewStyle } from 'react-native';
 import Animated, {
   multiply,
   sub,
   greaterThan,
   cond,
   add,
-  useCode,
-  onChange,
-  call,
   eq,
   interpolate,
   Extrapolate,
@@ -35,9 +32,9 @@ const StickyItem = ({
   stickyItemBackgroundColors,
   isRTL,
 }: StickyItemProps) => {
-  const containerRef = useRef<Animated.View>(null);
   const threshold = itemWidth - stickyItemWidth + separatorSize;
-  //#region Container
+
+  //#region animations
   const animatedTranslateX = multiply(
     cond(
       greaterThan(x, threshold),
@@ -52,6 +49,9 @@ const StickyItem = ({
     duration: 125,
     easing: Easing.inOut(Easing.quad),
   });
+  //#endregion
+
+  //#region styles
   const containerStyle = useMemo(
     () => [
       styles.container,
@@ -73,6 +73,17 @@ const StickyItem = ({
     ],
     // eslint-disable-next-line react-hooks/exhaustive-deps
     [itemWidth, itemHeight, stickyItemActiveOpacity]
+  );
+  const pressableViewStyle = useMemo<ViewStyle>(
+    () => ({
+      ...styles.pressable,
+      width: stickyItemWidth,
+      height: stickyItemHeight,
+      borderRadius: stickyItemWidth,
+      [isRTL ? 'left' : 'right']: 0,
+      top: (itemHeight - stickyItemHeight) / 2,
+    }),
+    [isRTL, stickyItemWidth, stickyItemHeight, itemHeight]
   );
   //#endregion
 
@@ -98,45 +109,9 @@ const StickyItem = ({
     );
   };
 
-  // effects
-  /**
-   * @DEV
-   * here we manipulate the container `pointerEvents` to avoid
-   * the double press event on Android.
-   */
-  useCode(
-    () => [
-      onChange(animatedTranslateX, [
-        cond(
-          eq(animatedTranslateX, separatorSize),
-          call([], () => {
-            const container = containerRef.current;
-            if (container) {
-              // @ts-ignore
-              container.setNativeProps({
-                pointerEvents: 'none',
-              });
-            }
-          })
-        ),
-        cond(
-          eq(animatedTranslateX, (threshold - separatorSize) * -1),
-          call([], () => {
-            const container = containerRef.current;
-            if (container) {
-              // @ts-ignore
-              container.setNativeProps({
-                pointerEvents: 'box-none',
-              });
-            }
-          })
-        ),
-      ]),
-    ],
-    [separatorSize, threshold]
-  );
   return (
-    <Animated.View ref={containerRef} style={containerStyle}>
+    <Animated.View pointerEvents="box-none" style={containerStyle}>
+      <View style={pressableViewStyle} />
       <StickyItemBackground
         threshold={threshold}
         x={x}
