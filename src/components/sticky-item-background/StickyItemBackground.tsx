@@ -2,7 +2,11 @@ import React, { useMemo } from 'react';
 import { Platform, ViewStyle } from 'react-native';
 import { Svg, Path, SvgProps, PathProps } from 'react-native-svg';
 import Animated, { Extrapolate, interpolate } from 'react-native-reanimated';
-import { interpolatePath, interpolateColor } from 'react-native-redash';
+import {
+  interpolatePath,
+  interpolateColor,
+  transformOrigin,
+} from 'react-native-redash';
 import { generatePathData } from './utils';
 import { StickyItemBackgroundProps } from '../../types';
 import { styles } from './styles';
@@ -33,11 +37,11 @@ const StickyItemBackground = ({
   separatorSize,
   borderRadius,
   stickyItemWidth,
+  stickyItemHeight,
   stickyItemBackgroundColors,
   isRTL,
 }: StickyItemBackgroundProps) => {
   const adjustedBorderRadius = borderRadius === 0 ? 0.0001 : borderRadius;
-  const stickySize = stickyItemWidth + separatorSize * 2;
 
   const paths = useMemo(
     () => [
@@ -52,46 +56,58 @@ const StickyItemBackground = ({
         br: adjustedBorderRadius,
       }),
       generatePathData({
-        x: isRTL ? 0 : itemWidth - stickyItemWidth - separatorSize * 2,
-        y: itemHeight / 2 - stickySize / 2,
-        width: stickySize,
-        height: stickySize,
-        tl: isRTL ? stickySize / 2 : 0.0001,
-        bl: isRTL ? stickySize / 2 : 0.0001,
-        tr: isRTL ? 0.0001 : stickySize / 2,
-        br: isRTL ? 0.0001 : stickySize / 2,
+        x: isRTL ? 0 : itemWidth - stickyItemWidth,
+        y: itemHeight / 2 - stickyItemHeight / 2,
+        width: stickyItemWidth,
+        height: stickyItemHeight,
+        tl: isRTL ? stickyItemHeight / 2 : 0.0001,
+        bl: isRTL ? stickyItemHeight / 2 : 0.0001,
+        tr: isRTL ? 0.0001 : stickyItemHeight / 2,
+        br: isRTL ? 0.0001 : stickyItemHeight / 2,
       }),
     ],
     [
       adjustedBorderRadius,
       itemWidth,
       itemHeight,
-      separatorSize,
       stickyItemWidth,
-      stickySize,
+      stickyItemHeight,
       isRTL,
     ]
   );
 
+  const animatedTransform = transformOrigin(
+    {
+      x: 0,
+      y: 0,
+    },
+    {
+      translateX: 0,
+    }
+  );
+
   const animatedPathData = interpolatePath(x, {
-    inputRange: [0, threshold],
+    inputRange: [separatorSize, threshold],
     outputRange: paths,
     extrapolate: Extrapolate.CLAMP,
   });
 
   const animatedBackgroundColor = interpolateColor(x, {
-    inputRange: [0, threshold],
+    inputRange: [separatorSize, threshold],
     outputRange: stickyItemBackgroundColors,
   });
 
   const animatedShadowRadius = interpolate(x, {
-    inputRange: [0, threshold],
+    inputRange: [separatorSize, threshold],
     outputRange: [1, 16],
     extrapolate: Extrapolate.CLAMP,
   });
 
   const containerStyle = [
     styles.container,
+    {
+      transform: animatedTransform,
+    },
     Platform.OS === 'ios'
       ? {
           shadowRadius: animatedShadowRadius,
@@ -100,19 +116,21 @@ const StickyItemBackground = ({
   ];
 
   return (
-    <AnimatedSvg
-      pointerEvents="none"
-      style={containerStyle}
-      width={itemWidth}
-      height={itemHeight}
-      viewBox={`0 0 ${itemWidth} ${itemHeight}`}
-    >
-      <AnimatedPath
-        d={animatedPathData}
-        fill={animatedBackgroundColor}
-        fillRule="evenodd"
-      />
-    </AnimatedSvg>
+    <>
+      <AnimatedSvg
+        pointerEvents="none"
+        style={containerStyle}
+        width={itemWidth}
+        height={itemHeight}
+        viewBox={`0 0 ${itemWidth} ${itemHeight}`}
+      >
+        <AnimatedPath
+          d={animatedPathData}
+          fill={animatedBackgroundColor}
+          fillRule="evenodd"
+        />
+      </AnimatedSvg>
+    </>
   );
 };
 

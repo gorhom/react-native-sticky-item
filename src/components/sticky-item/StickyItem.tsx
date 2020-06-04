@@ -36,14 +36,12 @@ const StickyItem = ({
   isRTL,
 }: StickyItemProps) => {
   const containerRef = useRef<Animated.View>(null);
-  const threshold = itemWidth - stickyItemWidth - separatorSize;
+  const threshold = itemWidth - stickyItemWidth + separatorSize;
   //#region Container
   const animatedTranslateX = multiply(
     cond(
       greaterThan(x, threshold),
-      isRTL
-        ? SCREEN_WIDTH - stickyItemWidth - separatorSize * 2
-        : itemWidth - stickyItemWidth - separatorSize * 2,
+      isRTL ? SCREEN_WIDTH - stickyItemWidth : itemWidth - stickyItemWidth,
       isRTL
         ? add(x, SCREEN_WIDTH - itemWidth - separatorSize)
         : sub(x, separatorSize)

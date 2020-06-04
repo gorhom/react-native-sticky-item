@@ -1,10 +1,11 @@
-/* eslint-disable @typescript-eslint/no-unused-vars */
 import React from 'react';
 import Animated, { interpolate, Extrapolate } from 'react-native-reanimated';
-import { transformOrigin } from 'react-native-redash';
 import type { StickyItemContentProps } from '@gorhom/sticky-item';
 import { styles } from './styles';
-import { View } from 'react-native';
+
+interface FacebookStickyStoryProps {
+  theme?: 'light' | 'dark';
+}
 
 const FacebookStickyStory = ({
   x,
@@ -12,101 +13,140 @@ const FacebookStickyStory = ({
   itemWidth,
   itemHeight,
   stickyItemWidth,
-  stickyItemHeight,
   separatorSize,
   borderRadius,
   isRTL,
-}: StickyItemContentProps) => {
-  const stickyScaleX = stickyItemWidth / itemWidth;
+  theme = 'light',
+}: StickyItemContentProps & FacebookStickyStoryProps) => {
+  const stickyItemX = itemWidth / 2 + (itemWidth / 2 - stickyItemWidth);
+  const stickyItemY = itemHeight / 2 - stickyItemWidth / 2;
+  const stickyItemWidthWithoutPadding = stickyItemWidth - separatorSize * 2;
+  const separatorSizeToStickyWidthScale = Math.min(
+    separatorSize / stickyItemWidth,
+    0.2
+  );
 
   //#region thumbnail
+  const thumbnailWidth = itemWidth;
+  const thumbnailHeight = itemWidth;
+
+  const thumbnailTranslateX =
+    Math.abs(thumbnailWidth / 2 - (stickyItemX + stickyItemWidth / 2)) *
+    (isRTL ? -1 : 1);
+  const thumbnailTranslateY = Math.abs(
+    thumbnailHeight / 2 - (stickyItemY + stickyItemWidth / 2)
+  );
+
+  const thumbnailScale =
+    stickyItemWidth / itemWidth - separatorSizeToStickyWidthScale;
   const animatedThumbnailScale = interpolate(x, {
-    inputRange: [0, threshold],
-    outputRange: [1, stickyScaleX],
+    inputRange: [separatorSize, threshold],
+    outputRange: [1, thumbnailScale],
     extrapolate: Extrapolate.CLAMP,
   });
   const animatedThumbnailTranslateX = interpolate(x, {
-    inputRange: [0, threshold],
-    outputRange: [0, isRTL ? separatorSize : -separatorSize],
+    inputRange: [separatorSize, threshold],
+    outputRange: [0, thumbnailTranslateX],
+    extrapolate: Extrapolate.CLAMP,
+  });
+  const animatedThumbnailTranslateY = interpolate(x, {
+    inputRange: [separatorSize, threshold],
+    outputRange: [0, thumbnailTranslateY],
     extrapolate: Extrapolate.CLAMP,
   });
   const animatedThumbnailBorderRadius = interpolate(x, {
-    inputRange: [0, threshold],
-    outputRange: [borderRadius, itemWidth],
+    inputRange: [separatorSize, threshold],
+    outputRange: [
+      borderRadius,
+      stickyItemWidth * (separatorSizeToStickyWidthScale + 1),
+    ],
     extrapolate: Extrapolate.CLAMP,
   });
 
   const thumbnailStyle = [
-    styles.thumbnail,
     {
-      width: itemWidth,
-      height: itemWidth,
+      backgroundColor: theme === 'light' ? 'black' : 'white',
+      width: thumbnailWidth,
+      height: thumbnailHeight,
       borderRadius: animatedThumbnailBorderRadius,
-      transform: transformOrigin(
-        {
-          x: (itemWidth / 2) * (isRTL ? -1 : 1),
-          y: itemHeight / 2 + stickyItemHeight / 2 - itemWidth / 2,
-        },
-        {
-          translateX: animatedThumbnailTranslateX,
-          scale: animatedThumbnailScale,
-        }
-      ) as Animated.AnimatedTransform,
+      transform: [
+        { translateX: (thumbnailWidth / 2) * -1 },
+        { translateY: (thumbnailHeight / 2) * -1 },
+        { translateX: animatedThumbnailTranslateX },
+        { translateY: animatedThumbnailTranslateY },
+        { translateX: thumbnailWidth / 2 },
+        { translateY: thumbnailHeight / 2 },
+        { scale: animatedThumbnailScale },
+      ],
     },
   ];
   //#endregion
 
-  //#region icon
-  const animatedIconTranslateX = interpolate(x, {
-    inputRange: [0, threshold],
-    outputRange: [
-      itemWidth / 2 - stickyItemWidth / 2,
-      isRTL ? 0 : itemWidth - separatorSize * 2 - stickyItemWidth / 2,
-    ],
+  //#region add icon
+  const addIconWidth = 30;
+  const addIconHeight = 30;
+
+  const addIconPosition = findPointOnCircle({
+    radius: stickyItemWidthWithoutPadding / 2,
+    degrees: isRTL ? 135 : 45,
+  });
+  const animatedAddIconTranslateX = interpolate(x, {
+    inputRange: [separatorSize, threshold],
+    outputRange: [0, addIconPosition.x],
     extrapolate: Extrapolate.CLAMP,
   });
-  const animatedIconTranslateY = interpolate(x, {
-    inputRange: [0, threshold],
-    outputRange: [itemHeight / 2, itemHeight / 2 - separatorSize],
+  const animatedAddIconTranslateY = interpolate(x, {
+    inputRange: [separatorSize, threshold],
+    outputRange: [thumbnailHeight / 2, addIconPosition.y],
     extrapolate: Extrapolate.CLAMP,
   });
-  const animatedIconScale = interpolate(x, {
-    inputRange: [0, threshold],
-    outputRange: [1, 0.4],
+  const animatedAddIconScale = interpolate(x, {
+    inputRange: [separatorSize, threshold],
+    outputRange: [1, 0.33],
     extrapolate: Extrapolate.CLAMP,
   });
-  const iconStyle = [
-    styles.icon,
+  const animatedAddIconBorderWidth = interpolate(x, {
+    inputRange: [separatorSize, threshold],
+    outputRange: [3, 2],
+    extrapolate: Extrapolate.CLAMP,
+  });
+  const addIconStyle = [
+    styles.addIcon,
     {
-      borderRadius: stickyItemWidth,
-      width: stickyItemWidth,
-      height: stickyItemWidth,
-      transform: transformOrigin(
-        { x: 0, y: 0 },
-        {
-          translateX: animatedIconTranslateX,
-          translateY: animatedIconTranslateY,
-          scale: animatedIconScale,
-        }
-      ) as Animated.AnimatedTransform,
+      width: addIconWidth,
+      height: addIconHeight,
+      borderRadius: addIconWidth,
+      borderWidth: animatedAddIconBorderWidth,
+      transform: [
+        { translateX: (addIconWidth / 2) * -1 },
+        { translateY: (addIconHeight / 2) * -1 },
+        { translateX: thumbnailWidth / 2 },
+        { translateY: thumbnailHeight / 2 },
+        { translateX: animatedThumbnailTranslateX },
+        { translateY: animatedThumbnailTranslateY },
+        { translateX: animatedAddIconTranslateX },
+        { translateY: animatedAddIconTranslateY },
+        { scale: animatedAddIconScale },
+      ],
     },
   ];
   //#endregion
 
   //#region text
   const animatedTextOpacity = interpolate(x, {
-    inputRange: [0, threshold * 0.6],
+    inputRange: [separatorSize, threshold * 0.6],
     outputRange: [1, 0],
     extrapolate: Extrapolate.CLAMP,
   });
   const animatedTextTranslateY = interpolate(x, {
-    inputRange: [0, threshold * 0.6],
+    inputRange: [separatorSize, threshold * 0.6],
     outputRange: [itemHeight / 2 + itemHeight / 4, itemHeight / 2],
     extrapolate: Extrapolate.CLAMP,
   });
   const textStyle = [
     styles.text,
     {
+      color: theme === 'light' ? 'black' : 'white',
       opacity: animatedTextOpacity,
       paddingHorizontal: separatorSize * 2,
       transform: [
@@ -120,49 +160,25 @@ const FacebookStickyStory = ({
 
   return (
     <>
-      {/* <View
-        style={{
-          position: 'absolute',
-          [isRTL ? 'left' : 'right']: 0,
-          top: 0,
-          bottom: 0,
-          opacity: 0.5,
-          width: separatorSize,
-          backgroundColor: 'red',
-        }}
-      />
-      <View
-        style={{
-          position: 'absolute',
-          [isRTL ? 'left' : 'right']: stickyItemWidth + separatorSize,
-
-          // right: stickyItemWidth + separatorSize,
-          top: 0,
-          bottom: 0,
-          opacity: 0.5,
-          width: separatorSize,
-          backgroundColor: 'white',
-        }}
-      />
-      <View
-        style={{
-          position: 'absolute',
-          [isRTL ? 'left' : 'right']: separatorSize,
-          top: itemHeight / 2 - stickyItemHeight / 2,
-          bottom: 0,
-          opacity: 1,
-          width: stickyItemWidth,
-          height: stickyItemHeight,
-          backgroundColor: 'blue',
-        }}
-      /> */}
       <Animated.View style={thumbnailStyle} />
       <Animated.Text style={textStyle}>
         {isRTL ? `إضافة إلى قصتك` : `Create a story`}
       </Animated.Text>
-      <Animated.View style={iconStyle} />
+      <Animated.View style={addIconStyle} />
     </>
   );
+};
+
+const findPointOnCircle = ({
+  radius,
+  degrees,
+}: {
+  radius: number;
+  degrees: number;
+}) => {
+  var newX = radius * Math.cos(degrees * (Math.PI / 180));
+  var newY = radius * Math.sin(degrees * (Math.PI / 180));
+  return { x: newX, y: newY };
 };
 
 export default FacebookStickyStory;
