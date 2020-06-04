@@ -118,7 +118,6 @@ const StickyItemBackground = ({
   return (
     <>
       <AnimatedSvg
-        pointerEvents="none"
         style={containerStyle}
         width={itemWidth}
         height={itemHeight}
