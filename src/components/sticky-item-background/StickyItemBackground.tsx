@@ -1,7 +1,7 @@
 import React, { useMemo } from 'react';
 import { Platform, ViewStyle } from 'react-native';
 import { Svg, Path, SvgProps, PathProps } from 'react-native-svg';
-import Animated, { Extrapolate, interpolate } from 'react-native-reanimated';
+import Animated, { Extrapolate } from 'react-native-reanimated';
 import {
   interpolatePath,
   interpolateColor,
@@ -10,6 +10,12 @@ import {
 import { generatePathData } from './utils';
 import { StickyItemBackgroundProps } from '../../types';
 import { styles } from './styles';
+
+const {
+  interpolate: interpolateV1,
+  interpolateNode: interpolateV2,
+} = require('react-native-reanimated');
+const interpolate = interpolateV2 || interpolateV1;
 
 Animated.addWhitelistedNativeProps({
   d: true,
