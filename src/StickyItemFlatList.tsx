@@ -22,7 +22,7 @@ import {
   TapGestureHandler,
   State,
 } from 'react-native-gesture-handler';
-import { useValues, useGestureHandler } from 'react-native-redash';
+import { useValue, useGestureHandler } from 'react-native-redash';
 import StickyItem from './components/sticky-item';
 import Separator from './components/separator';
 import {
@@ -131,7 +131,8 @@ const StickyItemFlatList = forwardRef(
     //#endregion
 
     //#region gesture
-    const [x, tapState] = useValues([0, State.UNDETERMINED]);
+    const x = useValue(0);
+    const tapState = useValue(State.UNDETERMINED);
     const tapGestures = useGestureHandler({ state: tapState });
     const onScroll = event([
       {

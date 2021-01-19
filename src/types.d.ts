@@ -1,6 +1,6 @@
 import type { FlatListProps } from 'react-native';
-import Animated from 'react-native-reanimated';
-import { State } from 'react-native-gesture-handler';
+import type Animated from 'react-native-reanimated';
+import type { State } from 'react-native-gesture-handler';
 
 export interface StickyItemProps extends Required<StickyItemConfig> {
   /**

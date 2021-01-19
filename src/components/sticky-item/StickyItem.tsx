@@ -11,7 +11,7 @@ import Animated, {
 } from 'react-native-reanimated';
 import { transformOrigin, withTimingTransition } from 'react-native-redash';
 import StickyItemBackground from '../sticky-item-background';
-import { StickyItemProps } from '../../types';
+import type { StickyItemProps } from '../../types';
 import { styles } from './styles';
 
 const {

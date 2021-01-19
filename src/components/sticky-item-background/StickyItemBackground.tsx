@@ -8,7 +8,7 @@ import {
   transformOrigin,
 } from 'react-native-redash';
 import { generatePathData } from './utils';
-import { StickyItemBackgroundProps } from '../../types';
+import type { StickyItemBackgroundProps } from '../../types';
 import { styles } from './styles';
 
 const {

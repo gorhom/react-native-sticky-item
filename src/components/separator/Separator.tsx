@@ -1,6 +1,6 @@
 import React, { memo } from 'react';
 import { View } from 'react-native';
-import { SeparatorConfig } from '../../types';
+import type { SeparatorConfig } from '../../types';
 
 interface SeparatorProps extends SeparatorConfig {}
 
