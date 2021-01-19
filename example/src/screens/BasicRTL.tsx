@@ -2,15 +2,11 @@ import React from 'react';
 import {
   StyleSheet,
   View,
-  SafeAreaView,
-  StatusBar,
-  Text,
   Alert,
   Platform,
   ListRenderItemInfo,
 } from 'react-native';
 import { TouchableOpacity } from 'react-native-gesture-handler';
-import { useRoute } from '@react-navigation/native';
 import StickyItemFlatList from '@gorhom/sticky-item';
 import DummyItem from '../components/dummy-item';
 import BasicSticky from '../components/basic-sticky';
@@ -27,10 +23,6 @@ const SEPARATOR_SIZE = 10;
 const BORDER_RADIUS = 0;
 
 const BasicRTL = () => {
-  const { params } = useRoute();
-  // @ts-ignore
-  const { title } = params;
-
   // styles
   const containerStyle = {
     paddingVertical: SEPARATOR_SIZE * 2,
@@ -53,9 +45,7 @@ const BasicRTL = () => {
     </TouchableOpacity>
   );
   return (
-    <SafeAreaView style={styles.root}>
-      <StatusBar barStyle="light-content" />
-      <Text style={styles.text}>{title}</Text>
+    <View style={styles.root}>
       <View style={containerStyle}>
         <StickyItemFlatList
           itemWidth={STORY_WIDTH}
@@ -72,7 +62,7 @@ const BasicRTL = () => {
           renderItem={renderItem}
         />
       </View>
-    </SafeAreaView>
+    </View>
   );
 };
 
@@ -80,8 +70,7 @@ const styles = StyleSheet.create({
   root: {
     flex: 1,
     flexDirection: 'column',
-    justifyContent: 'flex-start',
-    backgroundColor: '#000',
+    justifyContent: 'center',
   },
   text: {
     textAlign: 'right',

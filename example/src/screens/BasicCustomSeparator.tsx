@@ -2,15 +2,11 @@ import React from 'react';
 import {
   StyleSheet,
   View,
-  SafeAreaView,
-  StatusBar,
-  Text,
   Alert,
   Platform,
   ListRenderItemInfo,
 } from 'react-native';
 import { TouchableOpacity } from 'react-native-gesture-handler';
-import { useRoute } from '@react-navigation/native';
 import StickyItemFlatList from '@gorhom/sticky-item';
 import DummyItem from '../components/dummy-item';
 import BasicSticky from '../components/basic-sticky';
@@ -27,10 +23,6 @@ const SEPARATOR_SIZE = 40;
 const BORDER_RADIUS = 0;
 
 const BasicCustomSeparator = () => {
-  const { params } = useRoute();
-  // @ts-ignore
-  const { title } = params;
-
   // methods
   const handleStickyItemPress = () => Alert.alert('Sticky Item Pressed');
 
@@ -55,9 +47,7 @@ const BasicCustomSeparator = () => {
     );
   };
   return (
-    <SafeAreaView style={styles.root}>
-      <StatusBar barStyle="dark-content" />
-      <Text style={styles.text}>{title}</Text>
+    <View style={styles.root}>
       <View style={styles.container}>
         <StickyItemFlatList
           itemWidth={STORY_WIDTH}
@@ -74,7 +64,7 @@ const BasicCustomSeparator = () => {
           ItemSeparatorComponent={renderSeparator}
         />
       </View>
-    </SafeAreaView>
+    </View>
   );
 };
 
@@ -82,8 +72,7 @@ const styles = StyleSheet.create({
   root: {
     flex: 1,
     flexDirection: 'column',
-    justifyContent: 'flex-start',
-    backgroundColor: '#CACACD',
+    justifyContent: 'center',
   },
   container: {
     paddingVertical: 20,

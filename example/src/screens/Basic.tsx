@@ -3,15 +3,12 @@ import {
   StyleSheet,
   View,
   SafeAreaView,
-  StatusBar,
-  Text,
   Alert,
   Platform,
   FlatList,
   ListRenderItemInfo,
 } from 'react-native';
 import { TouchableOpacity } from 'react-native-gesture-handler';
-import { useRoute } from '@react-navigation/native';
 import StickyItemFlatList from '@gorhom/sticky-item';
 import Button from '../components/button';
 import DummyItem from '../components/dummy-item';
@@ -30,9 +27,6 @@ const BORDER_RADIUS = 0;
 
 const Basic = () => {
   const flatListRef = useRef<FlatList>(null);
-  const { params } = useRoute();
-  // @ts-ignore
-  const { title } = params;
 
   // styles
   const containerStyle = {
@@ -75,8 +69,6 @@ const Basic = () => {
   );
   return (
     <SafeAreaView style={styles.root}>
-      <StatusBar barStyle="dark-content" />
-      <Text style={styles.text}>{title}</Text>
       <View style={containerStyle}>
         <StickyItemFlatList
           ref={flatListRef}
@@ -110,8 +102,7 @@ const styles = StyleSheet.create({
   root: {
     flex: 1,
     flexDirection: 'column',
-    justifyContent: 'flex-start',
-    backgroundColor: '#CACACD',
+    justifyContent: 'center',
   },
   text: {
     marginHorizontal: SEPARATOR_SIZE * 2,

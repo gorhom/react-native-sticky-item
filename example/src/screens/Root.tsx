@@ -1,7 +1,8 @@
-import React from 'react';
+import React, { useMemo } from 'react';
 import { useNavigation } from '@react-navigation/native';
 import Showcase from '@gorhom/showcase-template';
 import { version, description } from '../../../package.json';
+import { useSafeArea } from 'react-native-safe-area-context';
 
 const examples = [
   {
@@ -43,6 +44,16 @@ const examples = [
 const RootScreen = () => {
   // hooks
   const { navigate } = useNavigation();
+  const safeInsets = useSafeArea();
+
+  // variables
+  const author = useMemo(
+    () => ({
+      username: 'Mo Gorhom',
+      url: 'https://gorhom.dev',
+    }),
+    []
+  );
 
   // callbacks
   const handleOnExamplePress = (slug: string) => {
@@ -56,11 +67,9 @@ const RootScreen = () => {
       name="Sticky Item"
       description={description}
       version={version}
-      author={{
-        username: '@gorhom',
-        url: 'https://twitter.com/gorhom',
-      }}
+      author={author}
       data={examples}
+      safeInsets={safeInsets}
       handleOnPress={handleOnExamplePress}
     />
   );
