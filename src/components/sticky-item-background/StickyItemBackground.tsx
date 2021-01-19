@@ -17,7 +17,7 @@ const {
 } = require('react-native-reanimated');
 const interpolate = interpolateV2 || interpolateV1;
 
-Animated.addWhitelistedNativeProps({
+Animated.addWhitelistedUIProps({
   d: true,
   translateX: true,
 });
