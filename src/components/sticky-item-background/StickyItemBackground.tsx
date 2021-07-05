@@ -6,16 +6,11 @@ import {
   interpolatePath,
   interpolateColor,
   transformOrigin,
-} from 'react-native-redash';
+} from '../../utilities/redash';
+import { interpolate } from '../../utilities/reanimated';
 import { generatePathData } from './utils';
 import type { StickyItemBackgroundProps } from '../../types';
 import { styles } from './styles';
-
-const {
-  interpolate: interpolateV1,
-  interpolateNode: interpolateV2,
-} = require('react-native-reanimated');
-const interpolate = interpolateV2 || interpolateV1;
 
 Animated.addWhitelistedUIProps({
   d: true,

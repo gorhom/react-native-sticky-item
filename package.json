@@ -34,7 +34,9 @@
     "bootstrap": "yarn example && yarn && yarn pods"
   },
   "dependencies": {
-    "react-native-redash": "^14.2.4"
+    "abs-svg-path": "^0.1.1",
+    "normalize-svg-path": "^1.1.0",
+    "parse-svg-path": "^0.1.2"
   },
   "devDependencies": {
     "@commitlint/cli": "^12.1.4",

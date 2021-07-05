@@ -9,6 +9,9 @@
     "start": "react-native start"
   },
   "dependencies": {
+    "abs-svg-path": "^0.1.1",
+    "normalize-svg-path": "^1.1.0",
+    "parse-svg-path": "^0.1.2",
     "@gorhom/showcase-template": "^1.0.2",
     "@react-native-community/masked-view": "^0.1.11",
     "@react-navigation/native": "^5.9.4",

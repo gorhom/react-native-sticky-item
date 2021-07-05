@@ -9,19 +9,11 @@ import Animated, {
   eq,
   Extrapolate,
 } from 'react-native-reanimated';
-import { transformOrigin, withTimingTransition } from 'react-native-redash';
+import { transformOrigin, withTimingTransition } from '../../utilities/redash';
+import { interpolate, Easing } from '../../utilities';
 import StickyItemBackground from '../sticky-item-background';
 import type { StickyItemProps } from '../../types';
 import { styles } from './styles';
-
-const {
-  interpolate: interpolateV1,
-  interpolateNode: interpolateV2,
-  Easing: EasingV1,
-  EasingNode: EasingV2,
-} = require('react-native-reanimated');
-const interpolate = interpolateV2 || interpolateV1;
-const Easing = EasingV2 || EasingV1;
 
 const { width: SCREEN_WIDTH } = Dimensions.get('window');
 
