@@ -23,10 +23,11 @@
   },
   "homepage": "https://github.com/gorhom/react-native-sticky-item#readme",
   "scripts": {
-    "typescript": "tsc --noEmit",
+    "typescript": "tsc --skipLibCheck --noEmit",
     "lint": "eslint \"**/*.{js,ts,tsx}\"",
-    "build": "bob build && yarn copy-dts",
+    "build": "bob build && yarn copy-dts && yarn delete-dts.js",
     "copy-dts": "copyfiles -u 1 \"src/**/*.d.ts\" lib/typescript",
+    "delete-dts.js": "find ./lib/commonjs -name '*.d.js*' -delete && find ./lib/module -name '*.d.js*' -delete",
     "release": "release-it",
     "example": "yarn --cwd example",
     "pods": "cd example/ios && node -e \"process.exit(require('os').platform() === 'darwin')\" || pod install",
@@ -36,27 +37,27 @@
     "react-native-redash": "^14.2.4"
   },
   "devDependencies": {
-    "@commitlint/cli": "^11.0.0",
-    "@commitlint/config-conventional": "^11.0.0",
-    "@react-native-community/bob": "^0.17.1",
+    "@commitlint/cli": "^12.1.4",
+    "@commitlint/config-conventional": "^12.1.4",
     "@react-native-community/eslint-config": "^2.0.0",
-    "@release-it/conventional-changelog": "^2.0.0",
-    "@types/react": "^16.9.34",
-    "@types/react-native": "0.62.5",
-    "auto-changelog": "^2.2.1",
+    "@release-it/conventional-changelog": "^2.0.1",
+    "@types/react": "^17.0.13",
+    "@types/react-native": "^0.64.10",
+    "auto-changelog": "^2.3.0",
     "copyfiles": "^2.4.1",
-    "eslint": "^7.18.0",
-    "eslint-config-prettier": "^7.2.0",
-    "eslint-plugin-prettier": "^3.3.1",
+    "eslint": "^7.30.0",
+    "eslint-config-prettier": "^8.3.0",
+    "eslint-plugin-prettier": "^3.4.0",
     "husky": "^4.3.8",
-    "prettier": "^2.2.1",
-    "react": "~16.9.0",
-    "react-native": "~0.61.5",
-    "react-native-gesture-handler": "^1.9.1",
-    "react-native-reanimated": "^1.13.2",
-    "react-native-svg": "^12.1.0",
-    "release-it": "^14.2.2",
-    "typescript": "^4.1.3"
+    "prettier": "^2.3.2",
+    "react": "~17.0.1",
+    "react-native": "~0.64.2",
+    "react-native-builder-bob": "^0.18.1",
+    "react-native-gesture-handler": "^1.10.3",
+    "react-native-reanimated": "^1.13.3",
+    "react-native-svg": "^12.1.1",
+    "release-it": "^14.10.0",
+    "typescript": "^4.3.5"
   },
   "peerDependencies": {
     "react": "*",
@@ -71,7 +72,7 @@
       "pre-commit": "yarn lint && yarn typescript"
     }
   },
-  "@react-native-community/bob": {
+  "react-native-builder-bob": {
     "source": "src",
     "output": "lib",
     "targets": [

@@ -22,9 +22,9 @@ Animated.addWhitelistedUIProps({
   translateX: true,
 });
 
-const AnimatedPath = (Animated.createAnimatedComponent(
+const AnimatedPath = Animated.createAnimatedComponent(
   Path
-) as any) as React.ComponentClass<
+) as any as React.ComponentClass<
   Animated.AnimateProps<ViewStyle, PathProps & { style?: ViewStyle }>,
   any
 >;
