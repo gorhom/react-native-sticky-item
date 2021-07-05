@@ -2,7 +2,7 @@ import React, { useMemo } from 'react';
 import { useNavigation } from '@react-navigation/native';
 import Showcase from '@gorhom/showcase-template';
 import { version, description } from '../../../package.json';
-import { useSafeArea } from 'react-native-safe-area-context';
+import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
 const examples = [
   {
@@ -44,7 +44,7 @@ const examples = [
 const RootScreen = () => {
   // hooks
   const { navigate } = useNavigation();
-  const safeInsets = useSafeArea();
+  const safeInsets = useSafeAreaInsets();
 
   // variables
   const author = useMemo(
