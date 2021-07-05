@@ -34,9 +34,7 @@ import {
 } from './constants';
 import type { StickyItemFlatListProps } from './types';
 
-const AnimatedFlatList = Animated.createAnimatedComponent(
-  FlatList
-) as typeof FlatList;
+const AnimatedFlatList = Animated.createAnimatedComponent(FlatList);
 
 const SCREEN_WIDTH = Dimensions.get('window').width;
 
@@ -65,10 +63,10 @@ const StickyItemFlatList = forwardRef(
     const tapRef = useRef<TapGestureHandler>(null);
 
     //#region variables
-    const itemWidthWithSeparator = useMemo(() => itemWidth + separatorSize, [
-      itemWidth,
-      separatorSize,
-    ]);
+    const itemWidthWithSeparator = useMemo(
+      () => itemWidth + separatorSize,
+      [itemWidth, separatorSize]
+    );
     const separatorProps = useMemo(
       () => ({
         size: separatorSize,
