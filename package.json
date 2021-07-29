@@ -1,6 +1,6 @@
 {
   "name": "@gorhom/sticky-item",
-  "version": "2.1.0",
+  "version": "2.1.1",
   "description": "An interactive sticky item inspired by Facebook Stories.",
   "main": "lib/commonjs/index.js",
   "module": "lib/module/index.js",

@@ -1,6 +1,13 @@
 # Changelog
 
-## [v2.1.0](https://github.com/gorhom/react-native-sticky-item/compare/v2.0.0...v2.1.0)
+## [v2.1.1](https://github.com/gorhom/react-native-sticky-item/compare/v2.1.0...v2.1.1)
+
+#### Improvements
+
+- refactor: copy redash used functionalities ([`#24`](https://github.com/gorhom/react-native-sticky-item/pull/24)).
+- chore: updated dependencies ([`#23`](https://github.com/gorhom/react-native-sticky-item/pull/23)).
+
+## [v2.1.0](https://github.com/gorhom/react-native-sticky-item/compare/v2.0.0...v2.1.0) - 2021-01-19
 
 #### Features
 
