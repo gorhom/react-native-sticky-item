@@ -22,7 +22,7 @@ import {
   TapGestureHandler,
   State,
 } from 'react-native-gesture-handler';
-import { useValue, useGestureHandler } from 'react-native-redash';
+import { useValue, useGestureHandler } from './utilities/redash';
 import StickyItem from './components/sticky-item';
 import Separator from './components/separator';
 import {
