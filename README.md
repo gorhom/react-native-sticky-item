@@ -118,6 +118,18 @@ export default App
 - [ ] Add more examples.
 - [ ] Add vertical support ?.
 
+## Author
+
+- [Mo Gorhom](https://twitter.com/gorhom)
+
+## Sponsor & Support
+
+To keep this library maintained and up-to-date please consider [sponsoring it on GitHub](https://github.com/sponsors/gorhom). Or if you are looking for a private support or help in customizing the experience, then reach out to me on Twitter [@gorhom](https://twitter.com/gorhom).
+
+## License
+
+MIT
+
 <h2 id="built-with">Built With ❤️</h2>
 
 - [react-native-reanimated](https://github.com/software-mansion/react-native-reanimated)
@@ -126,24 +138,8 @@ export default App
 - [react-native-svg](https://github.com/react-native-community/react-native-svg)
 - [@react-native-community/bob](https://github.com/react-native-community/bob)
 
-## Author
-
-- [Mo Gorhom](https://twitter.com/gorhom)
-
-## License
-
-MIT
-
-<div align="center">
-
-Liked the library? 😇
-
-<a href="https://www.buymeacoffee.com/gorhom" target="_blank"><img src="https://cdn.buymeacoffee.com/buttons/default-red.png" alt="Buy Me A Coffee" height="50" ></a>
-
-</div>
-
 ---
 
 <p align="center">
-<a href="https://twitter.com/gorhom"><img src="./logo.png"></a>
+<a href="https://gorhom.dev" target="_blank"><img height="18" alt="Mo Gorhom" src="./logo.png"></a>
 </p>
