@@ -4,7 +4,7 @@
   "description": "An interactive sticky item inspired by Facebook Stories.",
   "main": "lib/commonjs/index.js",
   "module": "lib/module/index.js",
-  "types": "lib/typescript/src/index.d.ts",
+  "types": "lib/typescript/index.d.ts",
   "react-native": "src/index.ts",
   "files": [
     "src",
